@@ -13,9 +13,9 @@ const Hero = () => {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
+        <div className="grid lg:grid-cols-[1fr,1fr] gap-24 xl:gap-32 items-center">
           {/* Content */}
-          <div className="text-center lg:text-left space-y-10 lg:pr-8">
+          <div className="text-center lg:text-left space-y-10 lg:pr-12 xl:pr-16">
             <div className="space-y-6">
               <div className="inline-flex items-center space-x-2 bg-accent/20 rounded-full px-5 py-3 backdrop-blur-sm">
                 <span className="text-2xl">🐾</span>
@@ -35,34 +35,39 @@ const Hero = () => {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start max-w-xl mx-auto lg:mx-0">
-              <Button 
-                variant="golden" 
-                size="lg" 
-                className="group text-base px-8 py-4 flex-1 sm:flex-none min-w-[200px]"
-              >
-                <Calendar className="w-5 h-5" />
-                Schedule a Visit
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start max-w-lg mx-auto lg:mx-0">
+                <Button 
+                  variant="golden" 
+                  size="lg" 
+                  className="group text-base px-6 py-4 flex-1 sm:flex-none"
+                >
+                  <Calendar className="w-5 h-5" />
+                  Schedule a Visit
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+                
+                <Button 
+                  variant="therapy" 
+                  size="lg" 
+                  className="text-base px-6 py-4 flex-1 sm:flex-none"
+                >
+                  <Heart className="w-5 h-5" />
+                  Learn About Ivy
+                </Button>
+              </div>
               
-              <Button 
-                variant="therapy" 
-                size="lg" 
-                className="text-base px-8 py-4 flex-1 sm:flex-none min-w-[180px]"
-              >
-                <Heart className="w-5 h-5" />
-                Learn About Ivy
-              </Button>
-              
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="text-base px-8 py-4 flex-1 sm:flex-none min-w-[160px]"
-              >
-                <Gift className="w-5 h-5" />
-                Donate Today
-              </Button>
+              {/* Separate row for Donate button to prevent overlap */}
+              <div className="flex justify-center lg:justify-start max-w-lg mx-auto lg:mx-0">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="text-base px-8 py-4"
+                >
+                  <Gift className="w-5 h-5" />
+                  Donate Today
+                </Button>
+              </div>
             </div>
 
             {/* Stats */}
