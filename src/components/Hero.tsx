@@ -13,9 +13,9 @@ const Hero = () => {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
           {/* Content */}
-          <div className="text-center lg:text-left space-y-10">
+          <div className="text-center lg:text-left space-y-10 lg:pr-8">
             <div className="space-y-6">
               <div className="inline-flex items-center space-x-2 bg-accent/20 rounded-full px-5 py-3 backdrop-blur-sm">
                 <span className="text-2xl">🐾</span>
@@ -35,7 +35,7 @@ const Hero = () => {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start max-w-2xl mx-auto lg:mx-0">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start max-w-xl mx-auto lg:mx-0">
               <Button 
                 variant="golden" 
                 size="lg" 
