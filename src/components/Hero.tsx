@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Heart, Calendar, Gift, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import ivyHero from "@/assets/ivy-hero.jpg";
 
 const Hero = () => {
@@ -36,38 +37,44 @@ const Hero = () => {
 
             {/* CTA Buttons */}
             <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start max-w-lg mx-auto lg:mx-0">
-                <Button 
-                  variant="golden" 
-                  size="lg" 
-                  className="group text-base px-6 py-4 flex-1 sm:flex-none"
-                >
-                  <Calendar className="w-5 h-5" />
-                  Schedule a Visit
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-                
-                <Button 
-                  variant="therapy" 
-                  size="lg" 
-                  className="text-base px-6 py-4 flex-1 sm:flex-none"
-                >
-                  <Heart className="w-5 h-5" />
-                  Learn About Ivy
-                </Button>
-              </div>
-              
-              {/* Separate row for Donate button to prevent overlap */}
-              <div className="flex justify-center lg:justify-start max-w-lg mx-auto lg:mx-0">
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="text-base px-8 py-4"
-                >
-                  <Gift className="w-5 h-5" />
-                  Donate Today
-                </Button>
-              </div>
+               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start max-w-lg mx-auto lg:mx-0">
+                 <Link to="/schedule" className="flex-1 sm:flex-none">
+                   <Button 
+                     variant="golden" 
+                     size="lg" 
+                     className="group text-base px-6 py-4 w-full hover:scale-105 active:scale-95 transition-all duration-200"
+                   >
+                     <Calendar className="w-5 h-5" />
+                     Schedule a Visit
+                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                   </Button>
+                 </Link>
+                 
+                 <Link to="/about" className="flex-1 sm:flex-none">
+                   <Button 
+                     variant="therapy" 
+                     size="lg" 
+                     className="text-base px-6 py-4 w-full hover:scale-105 active:scale-95 transition-all duration-200"
+                   >
+                     <Heart className="w-5 h-5" />
+                     Learn About Ivy
+                   </Button>
+                 </Link>
+               </div>
+               
+               {/* Separate row for Donate button to prevent overlap */}
+               <div className="flex justify-center lg:justify-start max-w-lg mx-auto lg:mx-0">
+                 <Link to="/donate">
+                   <Button 
+                     variant="outline" 
+                     size="lg" 
+                     className="text-base px-8 py-4 hover:scale-105 active:scale-95 transition-all duration-200 hover:bg-primary hover:text-primary-foreground"
+                   >
+                     <Gift className="w-5 h-5" />
+                     Donate Today
+                   </Button>
+                 </Link>
+               </div>
             </div>
 
             {/* Stats */}
