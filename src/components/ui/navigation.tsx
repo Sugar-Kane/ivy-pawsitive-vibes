@@ -22,15 +22,17 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 rounded-full bg-gradient-golden flex items-center justify-center shadow-soft animate-gentle-float">
-              <span className="text-xl font-bold text-primary-foreground">🐾</span>
+          <Link to="/" className="flex items-center space-x-4 group">
+            <div className="w-12 h-12 rounded-full bg-gradient-golden flex items-center justify-center shadow-soft animate-gentle-float group-hover:scale-105 transition-transform">
+              <span className="text-2xl font-bold text-primary-foreground">🐾</span>
             </div>
-            <div>
-              <h1 className="font-heading text-lg font-bold text-foreground">
+            <div className="flex flex-col justify-center">
+              <h1 className="font-heading text-xl font-bold text-foreground leading-tight">
                 Ivy's Therapy Paws
               </h1>
-              <p className="text-xs text-muted-foreground">Bringing Joy, One Paw at a Time</p>
+              <p className="text-sm text-muted-foreground leading-tight mt-0.5">
+                Bringing Joy, One Paw at a Time
+              </p>
             </div>
           </Link>
 
