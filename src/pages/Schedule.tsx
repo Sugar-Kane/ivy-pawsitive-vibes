@@ -2,6 +2,8 @@ import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin, Phone, Mail } from "lucide-react";
+import ReviewSnippets from "@/components/ReviewSnippets";
+import DonationPrompt from "@/components/DonationPrompt";
 
 const SchedulePage = () => {
   return (
@@ -106,6 +108,20 @@ const SchedulePage = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+        
+        {/* Reviews Section */}
+        <section className="py-16 bg-background">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ReviewSnippets maxReviews={2} />
+          </div>
+        </section>
+        
+        {/* Support Donation Prompt */}
+        <section className="py-16 bg-gradient-soft">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <DonationPrompt context="schedule" compact />
           </div>
         </section>
       </div>

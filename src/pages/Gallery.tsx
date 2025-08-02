@@ -3,6 +3,10 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Camera, Play } from "lucide-react";
+import StickyBookingCTA from "@/components/StickyBookingCTA";
+import DonationPrompt from "@/components/DonationPrompt";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const GalleryPage = () => {
   const galleryItems = [
@@ -164,19 +168,38 @@ const GalleryPage = () => {
                   in our gallery to inspire others and show the impact of therapy dog visits.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <button className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
-                    Submit Photos
-                  </button>
-                  <button className="px-6 py-3 border border-border rounded-lg hover:bg-secondary transition-colors">
-                    Share Your Story
-                  </button>
+                  <Button variant="default">Submit Photos</Button>
+                  <Button variant="outline">Share Your Story</Button>
                 </div>
+              </div>
+            </div>
+            
+            {/* Book a Visit Prompt */}
+            <div className="text-center mt-12">
+              <div className="bg-gradient-warm rounded-3xl p-8 shadow-warm text-background max-w-2xl mx-auto">
+                <h3 className="text-2xl font-heading font-bold mb-4">Inspired by These Moments?</h3>
+                <p className="text-background/90 mb-6">
+                  Book a therapy visit with Ivy and create your own special memories that bring joy and healing.
+                </p>
+                <Link to="/schedule">
+                  <Button variant="outline" className="bg-transparent border-background text-background hover:bg-background hover:text-foreground">
+                    Schedule a Visit with Ivy
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
         </section>
+        
+        {/* Donation Prompt */}
+        <section className="py-16 bg-gradient-soft">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <DonationPrompt context="gallery" />
+          </div>
+        </section>
       </div>
       <Footer />
+      <StickyBookingCTA />
     </div>
   );
 };

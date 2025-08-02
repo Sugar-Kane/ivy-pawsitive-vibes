@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Heart, Calendar, ShoppingBag, DollarSign, Camera, Phone } from "lucide-react";
+import { Menu, X, Heart, Calendar, ShoppingBag, DollarSign, Camera, Phone, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
@@ -10,9 +10,10 @@ const Navigation = () => {
     { name: "About", href: "/about", icon: Heart },
     { name: "Mission", href: "/mission", icon: Heart },
     { name: "Schedule", href: "/schedule", icon: Calendar },
-    { name: "Donate", href: "/donate", icon: DollarSign },
-    { name: "Shop", href: "/shop", icon: ShoppingBag },
+    { name: "Reviews", href: "/reviews", icon: Star },
     { name: "Gallery", href: "/gallery", icon: Camera },
+    { name: "Shop", href: "/shop", icon: ShoppingBag },
+    { name: "Donate", href: "/donate", icon: DollarSign },
     { name: "Contact", href: "/contact", icon: Phone },
   ];
 

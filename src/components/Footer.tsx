@@ -1,4 +1,5 @@
-import { Heart, Mail, Phone, MapPin } from "lucide-react";
+import { Heart, Mail, Phone, MapPin, Instagram, Facebook, Twitter } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -30,18 +31,18 @@ const Footer = () => {
           <div>
             <h4 className="font-heading font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><a href="#about" className="text-sm opacity-80 hover:opacity-100 hover:text-primary transition-colors">About Ivy</a></li>
-              <li><a href="#mission" className="text-sm opacity-80 hover:opacity-100 hover:text-primary transition-colors">Our Mission</a></li>
-              <li><a href="#schedule" className="text-sm opacity-80 hover:opacity-100 hover:text-primary transition-colors">Schedule Visit</a></li>
-              <li><a href="#donate" className="text-sm opacity-80 hover:opacity-100 hover:text-primary transition-colors">Donate</a></li>
-              <li><a href="#shop" className="text-sm opacity-80 hover:opacity-100 hover:text-primary transition-colors">Shop</a></li>
+              <li><Link to="/about" className="text-sm opacity-80 hover:opacity-100 hover:text-primary transition-colors">About Ivy</Link></li>
+              <li><Link to="/mission" className="text-sm opacity-80 hover:opacity-100 hover:text-primary transition-colors">Our Mission</Link></li>
+              <li><Link to="/schedule" className="text-sm opacity-80 hover:opacity-100 hover:text-primary transition-colors">Schedule Visit</Link></li>
+              <li><Link to="/donate" className="text-sm opacity-80 hover:opacity-100 hover:text-primary transition-colors">Donate</Link></li>
+              <li><Link to="/shop" className="text-sm opacity-80 hover:opacity-100 hover:text-primary transition-colors">Shop</Link></li>
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Contact & Social */}
           <div>
-            <h4 className="font-heading font-semibold mb-4">Contact</h4>
-            <div className="space-y-3">
+            <h4 className="font-heading font-semibold mb-4">Stay Connected</h4>
+            <div className="space-y-3 mb-4">
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-primary" />
                 <a href="mailto:hello@ivystherapypaws.org" className="text-sm opacity-80 hover:opacity-100 hover:text-primary transition-colors">
@@ -57,6 +58,36 @@ const Footer = () => {
               <div className="flex items-center space-x-3">
                 <MapPin className="w-4 h-4 text-primary" />
                 <span className="text-sm opacity-80">Greater Metro Area</span>
+              </div>
+            </div>
+            
+            <div className="mb-3">
+              <p className="text-sm opacity-80 mb-2">Follow Ivy's Journey:</p>
+              <div className="flex space-x-3">
+                <a 
+                  href="https://instagram.com/ivystherapypaws" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a 
+                  href="https://facebook.com/ivystherapypaws" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                >
+                  <Facebook className="w-4 h-4" />
+                </a>
+                <a 
+                  href="https://twitter.com/ivystherapypaws" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                >
+                  <Twitter className="w-4 h-4" />
+                </a>
               </div>
             </div>
           </div>

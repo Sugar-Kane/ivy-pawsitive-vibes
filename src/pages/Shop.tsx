@@ -3,6 +3,8 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ShoppingBag, Heart, Star } from "lucide-react";
+import StickyBookingCTA from "@/components/StickyBookingCTA";
+import DonationPrompt from "@/components/DonationPrompt";
 
 const ShopPage = () => {
   const products = [
@@ -146,8 +148,22 @@ const ShopPage = () => {
             </div>
           </div>
         </section>
+        
+        {/* Mission Support */}
+        <section className="py-16 bg-gradient-soft">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <h3 className="text-2xl font-heading font-bold mb-4">Every Purchase Supports Ivy's Mission</h3>
+              <p className="text-muted-foreground mb-6 leading-relaxed">
+                100% of proceeds go directly toward funding therapy visits, training, and supplies needed to bring joy and healing to our community.
+              </p>
+              <DonationPrompt compact />
+            </div>
+          </div>
+        </section>
       </div>
       <Footer />
+      <StickyBookingCTA />
     </div>
   );
 };
