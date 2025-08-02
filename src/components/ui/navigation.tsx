@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Heart, Calendar, ShoppingBag, DollarSign } from "lucide-react";
+import { Menu, X, Heart, Calendar, ShoppingBag, DollarSign, Camera, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { name: "About", href: "#about", icon: Heart },
-    { name: "Mission", href: "#mission", icon: Heart },
-    { name: "Schedule", href: "#schedule", icon: Calendar },
-    { name: "Donate", href: "#donate", icon: DollarSign },
-    { name: "Shop", href: "#shop", icon: ShoppingBag },
+    { name: "About", href: "/about", icon: Heart },
+    { name: "Mission", href: "/mission", icon: Heart },
+    { name: "Schedule", href: "/schedule", icon: Calendar },
+    { name: "Donate", href: "/donate", icon: DollarSign },
+    { name: "Shop", href: "/shop", icon: ShoppingBag },
+    { name: "Gallery", href: "/gallery", icon: Camera },
+    { name: "Contact", href: "/contact", icon: Phone },
   ];
 
   return (
@@ -18,7 +21,7 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
             <div className="w-10 h-10 rounded-full bg-gradient-golden flex items-center justify-center shadow-soft animate-gentle-float">
               <span className="text-xl font-bold text-primary-foreground">🐾</span>
             </div>
@@ -28,19 +31,19 @@ const Navigation = () => {
               </h1>
               <p className="text-xs text-muted-foreground">Bringing Joy, One Paw at a Time</p>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className="text-foreground hover:text-primary transition-gentle flex items-center space-x-1 px-3 py-2 rounded-lg hover:bg-secondary/50"
               >
                 <item.icon className="w-4 h-4" />
                 <span className="font-medium">{item.name}</span>
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -63,15 +66,15 @@ const Navigation = () => {
         <div className="md:hidden bg-background border-t border-border shadow-soft">
           <div className="px-4 py-3 space-y-2">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 onClick={() => setIsOpen(false)}
                 className="flex items-center space-x-3 px-3 py-2 rounded-lg text-foreground hover:bg-secondary/50 transition-gentle"
               >
                 <item.icon className="w-4 h-4" />
                 <span className="font-medium">{item.name}</span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
