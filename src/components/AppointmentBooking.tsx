@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { format } from 'date-fns';
-import { CalendarIcon, Clock, User, Building, Phone, MapPin } from 'lucide-react';
+import { CalendarIcon, Clock, User, Building, Phone, MapPin, CheckCircle2, Home, Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -56,6 +56,8 @@ const timeSlots = [
 
 const AppointmentBooking = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [confirmedBooking, setConfirmedBooking] = useState<any>(null);
   const { toast } = useToast();
   
   const form = useForm<AppointmentForm>({
@@ -82,11 +84,8 @@ const AppointmentBooking = () => {
         throw error;
       }
 
-      toast({
-        title: 'Appointment Booked Successfully!',
-        description: `Your visit with Ivy is scheduled for ${format(data.appointmentDate, 'MMMM do, yyyy')} at ${data.appointmentTime}. We'll contact you soon to confirm details.`,
-      });
-
+      setConfirmedBooking(data);
+      setIsConfirmed(true);
       form.reset();
     } catch (error) {
       console.error('Error booking appointment:', error);
@@ -105,6 +104,66 @@ const AppointmentBooking = () => {
     today.setHours(0, 0, 0, 0);
     return date < today;
   };
+
+  // Show confirmation screen after successful booking
+  if (isConfirmed && confirmedBooking) {
+    return (
+      <div className="bg-background rounded-3xl p-8 shadow-warm border border-border/50 text-center">
+        <div className="mb-8">
+          <CheckCircle2 className="w-16 h-16 text-primary mx-auto mb-4" />
+          <h3 className="text-3xl font-heading font-bold mb-2 text-primary">
+            Booking Confirmed!
+          </h3>
+          <p className="text-lg text-muted-foreground mb-6">
+            Your visit with Ivy has been successfully scheduled.
+          </p>
+        </div>
+
+        <div className="bg-accent/10 rounded-xl p-6 mb-8 border border-accent/20">
+          <h4 className="font-semibold text-lg mb-4">Visit Details</h4>
+          <div className="space-y-2 text-sm">
+            <p><strong>Date:</strong> {format(confirmedBooking.appointmentDate, 'MMMM do, yyyy')}</p>
+            <p><strong>Time:</strong> {confirmedBooking.appointmentTime}</p>
+            <p><strong>Contact:</strong> {confirmedBooking.name}</p>
+            <p><strong>Location:</strong> {confirmedBooking.location}</p>
+          </div>
+        </div>
+
+        <div className="bg-primary/5 rounded-xl p-6 mb-8 border border-primary/20">
+          <h5 className="font-semibold text-sm mb-2 flex items-center justify-center">
+            <Clock className="w-4 h-4 mr-2 text-primary" />
+            What happens next?
+          </h5>
+          <ul className="text-sm text-muted-foreground space-y-1">
+            <li>• We'll review your request within 24 hours</li>
+            <li>• Our team will contact you to confirm details</li>
+            <li>• We'll coordinate the perfect visit for your needs</li>
+          </ul>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button 
+            variant="outline" 
+            size="lg"
+            onClick={() => window.location.href = '/'}
+            className="flex items-center"
+          >
+            <Home className="w-5 h-5 mr-2" />
+            Return to Website
+          </Button>
+          <Button 
+            variant="golden" 
+            size="lg"
+            onClick={() => window.location.href = '/donate'}
+            className="flex items-center"
+          >
+            <Heart className="w-5 h-5 mr-2" />
+            Support Our Mission
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-background rounded-3xl p-8 shadow-warm border border-border/50">
