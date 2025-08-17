@@ -175,6 +175,116 @@ const About = () => {
         </div>
       </section>
 
+      {/* The Proven Impact of Therapy Dogs Section */}
+      <section className="py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-6">
+              The Proven Impact of Therapy Dogs
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+              Research worldwide shows that therapy dog visits help people of all ages—from children in hospitals, 
+              to students under academic stress, to seniors in long-term care. Interacting with a therapy dog can 
+              lower stress hormones, reduce blood pressure, ease pain, and boost endorphins that create feelings 
+              of happiness and well-being.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            {/* Benefits */}
+            <div>
+              <h3 className="text-2xl font-heading font-bold text-foreground mb-6">
+                A visit from Ivy can provide:
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-start space-x-4">
+                  <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <p className="font-semibold text-foreground">Emotional comfort & stress relief</p>
+                    <p className="text-muted-foreground text-sm">reduces anxiety and uplifts mood</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <p className="font-semibold text-foreground">Improved physical health</p>
+                    <p className="text-muted-foreground text-sm">lowers blood pressure and heart rate, lessens perception of pain</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <p className="font-semibold text-foreground">Motivation for therapy & rehabilitation</p>
+                    <p className="text-muted-foreground text-sm">encourages movement and participation in treatment</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <p className="font-semibold text-foreground">Cognitive stimulation</p>
+                    <p className="text-muted-foreground text-sm">helps with memory recall, attention, and communication</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-3 h-3 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <p className="font-semibold text-foreground">Social connection</p>
+                    <p className="text-muted-foreground text-sm">sparks conversation, empathy, and a sense of belonging</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Evidence Snapshot */}
+            <div>
+              <Card className="bg-gradient-golden/10 border-primary/20 shadow-soft">
+                <CardContent className="p-6">
+                  <div className="text-center mb-6">
+                    <div className="text-3xl mb-3">📊</div>
+                    <h3 className="font-heading font-bold text-lg text-foreground">
+                      Making a Difference, One Visit at a Time
+                    </h3>
+                  </div>
+                  
+                  <div className="space-y-4 text-sm">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-muted-foreground">
+                        Up to <span className="font-semibold text-foreground">79%</span> of patients report reduced stress and anxiety after a therapy dog visit
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-muted-foreground">
+                        <span className="font-semibold text-foreground">85%</span> of healthcare workers feel less stressed and more satisfied after therapy dog interactions
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-muted-foreground">
+                        Children in reading-to-dog programs show significant improvements in reading scores and confidence
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-muted-foreground">
+                        Seniors in care homes report less loneliness and depression with regular therapy dog visits
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 pt-4 border-t border-border/50">
+                    <p className="text-xs text-muted-foreground italic text-center">
+                      (Sources: peer-reviewed hospital, school, and elder care studies, 2015–2024)
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Divider */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center py-8">
