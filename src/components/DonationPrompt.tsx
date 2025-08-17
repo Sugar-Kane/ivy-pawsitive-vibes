@@ -79,7 +79,13 @@ const DonationPrompt = ({ context = "general", compact = false }: DonationPrompt
         </div>
         
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link to="/donate">
+          <Link 
+            to="/donate"
+            onClick={() => {
+              // Scroll to top when navigating to donate
+              setTimeout(() => window.scrollTo(0, 0), 100);
+            }}
+          >
             <Button variant="golden" className="w-full sm:w-auto">
               <DollarSign className="w-4 h-4 mr-2" />
               Make a Donation
