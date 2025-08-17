@@ -15,7 +15,7 @@ const DonationPrompt = ({ context = "general", compact = false }: DonationPrompt
         return {
           title: "Help Ivy Continue Her Mission",
           description: "Your support helps cover training, travel, and supplies needed for Ivy's therapy visits.",
-          highlight: "$25 covers supplies for one therapy visit"
+          highlight: "$25 covers one therapy visit"
         };
       case "gallery":
         return {
