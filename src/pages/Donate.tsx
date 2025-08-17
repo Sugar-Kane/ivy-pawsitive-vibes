@@ -187,7 +187,7 @@ const DonatePage = () => {
                   <div className="w-12 h-12 mx-auto bg-primary/20 rounded-full flex items-center justify-center mb-4">
                     <Heart className="w-6 h-6 text-primary" />
                   </div>
-                  <CardTitle className="text-xl">$25</CardTitle>
+                  <CardTitle className="text-xl">$10</CardTitle>
                   <CardDescription>Covers supplies for one therapy visit</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -204,14 +204,14 @@ const DonatePage = () => {
                   <div className="w-12 h-12 mx-auto bg-accent/20 rounded-full flex items-center justify-center mb-4">
                     <Users className="w-6 h-6 text-accent" />
                   </div>
-                  <CardTitle className="text-xl">$100</CardTitle>
-                  <CardDescription>Funds a full day of therapy visits</CardDescription>
+                  <CardTitle className="text-xl">$25</CardTitle>
+                  <CardDescription>Funds for 1 hour session of a therapy visit</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="text-sm text-muted-foreground space-y-2">
-                    <li>• Multiple facility visits</li>
-                    <li>• Extended session time</li>
-                    <li>• Documentation photos</li>
+                    <li>• Professional session time</li>
+                    <li>• Extended therapy interaction</li>
+                    <li>• Personalized care activities</li>
                   </ul>
                 </CardContent>
               </Card>
@@ -221,8 +221,8 @@ const DonatePage = () => {
                   <div className="w-12 h-12 mx-auto bg-secondary/20 rounded-full flex items-center justify-center mb-4">
                     <Gift className="w-6 h-6 text-secondary" />
                   </div>
-                  <CardTitle className="text-xl">$250</CardTitle>
-                  <CardDescription>Supports monthly certification & training</CardDescription>
+                  <CardTitle className="text-xl">$50</CardTitle>
+                  <CardDescription>Support monthly certification and training</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="text-sm text-muted-foreground space-y-2">
