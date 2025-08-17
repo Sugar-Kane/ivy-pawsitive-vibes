@@ -311,10 +311,8 @@ const DonatePage = () => {
                   <div className="border-t border-border pt-6">
                     <h4 className="font-semibold mb-2">Other Ways to Support:</h4>
                     <div className="space-y-2 text-sm text-muted-foreground">
-                      <p>• Shop our merchandise store</p>
-                      <p>• Share our mission on social media</p>
-                      <p>• Volunteer for special events</p>
-                      <p>• Sponsor a therapy visit</p>
+                      <p>• <a href="/shop" className="text-primary hover:underline">Shop our merchandise store</a></p>
+                      <p>• Follow our mission on social media</p>
                     </div>
                   </div>
                 </CardContent>
