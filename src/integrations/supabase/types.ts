@@ -56,6 +56,75 @@ export type Database = {
         }
         Relationships: []
       }
+      email_subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          last_notification_sent: string | null
+          notification_preferences: Json | null
+          subscribed_at: string
+          updated_at: string
+          verification_token: string | null
+          verified: boolean
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          last_notification_sent?: string | null
+          notification_preferences?: Json | null
+          subscribed_at?: string
+          updated_at?: string
+          verification_token?: string | null
+          verified?: boolean
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          last_notification_sent?: string | null
+          notification_preferences?: Json | null
+          subscribed_at?: string
+          updated_at?: string
+          verification_token?: string | null
+          verified?: boolean
+        }
+        Relationships: []
+      }
+      notification_logs: {
+        Row: {
+          delivery_status: string | null
+          error_message: string | null
+          id: string
+          notification_type: string
+          resend_message_id: string | null
+          sent_at: string
+          subject: string
+          subscriber_email: string
+        }
+        Insert: {
+          delivery_status?: string | null
+          error_message?: string | null
+          id?: string
+          notification_type: string
+          resend_message_id?: string | null
+          sent_at?: string
+          subject: string
+          subscriber_email: string
+        }
+        Update: {
+          delivery_status?: string | null
+          error_message?: string | null
+          id?: string
+          notification_type?: string
+          resend_message_id?: string | null
+          sent_at?: string
+          subject?: string
+          subscriber_email?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
