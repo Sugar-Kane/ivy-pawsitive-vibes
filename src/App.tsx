@@ -11,6 +11,7 @@ import DonatePage from "./pages/Donate";
 import ShopPage from "./pages/Shop";
 import GalleryPage from "./pages/Gallery";
 import ContactPage from "./pages/Contact";
+import AdminNewsletter from "./pages/AdminNewsletter";
 
 import NotFound from "./pages/NotFound";
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/admin/newsletter" element={<AdminNewsletter />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
