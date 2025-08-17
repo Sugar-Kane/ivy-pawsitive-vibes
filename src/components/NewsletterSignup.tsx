@@ -22,15 +22,40 @@ const NewsletterSignup = ({ variant = "inline", onClose }: NewsletterSignupProps
     setIsLoading(true);
     
     try {
-      // Add to email subscribers table
+      // Check if email already exists
+      const { data: existingSubscriber } = await supabase
+        .from('email_subscribers')
+        .select('email, verified')
+        .eq('email', email)
+        .single();
+
+      if (existingSubscriber) {
+        setIsSubscribed(true);
+        toast({
+          title: "Already subscribed!",
+          description: "You're already on our newsletter list. Thank you!",
+        });
+        
+        setTimeout(() => {
+          if (variant === "popup" && onClose) {
+            onClose();
+          }
+        }, 2000);
+        return;
+      }
+
+      // Add to email subscribers table using upsert
       const { error: dbError } = await supabase
         .from('email_subscribers')
-        .insert([
+        .upsert([
           {
             email: email,
-            subscribed_at: new Date().toISOString()
+            subscribed_at: new Date().toISOString(),
+            verified: false
           }
-        ]);
+        ], {
+          onConflict: 'email'
+        });
 
       if (dbError) throw dbError;
 
