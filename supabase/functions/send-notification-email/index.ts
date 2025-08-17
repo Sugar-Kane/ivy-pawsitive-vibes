@@ -26,7 +26,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Sending ${type} email to ${email}`);
 
     let emailContent = {
-      from: "Ivy's Healing Hands <noreply@yourdomain.com>", // Change this to your verified domain
+      from: "onboarding@resend.dev", // Use Resend's testing domain
       to: [email],
       subject: "",
       html: ""
