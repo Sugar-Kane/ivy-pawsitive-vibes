@@ -16,18 +16,31 @@ const About = () => {
       {/* Hero Section */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-primary/10 rounded-full px-6 py-3 mb-6">
-              <Heart className="w-5 h-5 text-primary" />
-              <span className="text-primary font-medium">About Our Mission</span>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="text-center lg:text-left">
+              <div className="inline-flex items-center space-x-2 bg-primary/10 rounded-full px-6 py-3 mb-6">
+                <Heart className="w-5 h-5 text-primary" />
+                <span className="text-primary font-medium">About Our Mission</span>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-heading font-bold text-foreground mb-8">
+                Meet Ivy, Our <span className="text-gradient-golden">Gentle Healer</span>
+              </h1>
+              <p className="text-xl text-muted-foreground max-w-4xl leading-relaxed">
+                Ivy is more than just a golden doodle – she's a certified therapy dog with a special gift 
+                for bringing comfort, joy, and healing to people of all ages in their time of need.
+              </p>
             </div>
-            <h1 className="text-4xl md:text-6xl font-heading font-bold text-foreground mb-8">
-              Meet Ivy, Our <span className="text-gradient-golden">Gentle Healer</span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-              Ivy is more than just a golden doodle – she's a certified therapy dog with a special gift 
-              for bringing comfort, joy, and healing to people of all ages in their time of need.
-            </p>
+            <div className="relative">
+              <div className="relative mx-auto max-w-md">
+                <img
+                  src="/lovable-uploads/d9959ce2-f4f0-4aa0-a500-5514aacbc97c.png"
+                  alt="Ivy, the golden doodle therapy dog, sitting on grass with a happy expression"
+                  className="w-full h-auto rounded-2xl shadow-warm"
+                />
+                <div className="absolute -top-4 -right-4 w-16 h-16 bg-primary/20 rounded-full animate-gentle-float"></div>
+                <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-accent/20 rounded-full animate-paw-bounce"></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
