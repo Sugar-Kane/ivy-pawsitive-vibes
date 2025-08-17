@@ -238,44 +238,38 @@ const About = () => {
             {/* Evidence Snapshot */}
             <div>
               <Card className="bg-gradient-golden/10 border-primary/20 shadow-soft">
-                <CardContent className="p-6">
-                  <div className="text-center mb-6">
-                    <div className="text-3xl mb-3">📊</div>
-                    <h3 className="font-heading font-bold text-lg text-foreground">
+                <CardContent className="p-8">
+                  <div className="text-center mb-8">
+                    <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Heart className="w-8 h-8 text-primary" fill="currentColor" />
+                    </div>
+                    <h3 className="font-heading font-bold text-xl text-foreground">
                       Making a Difference, One Visit at a Time
                     </h3>
                   </div>
                   
-                  <div className="space-y-4 text-sm">
-                    <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-muted-foreground">
-                        Up to <span className="font-semibold text-foreground">79%</span> of patients report reduced stress and anxiety after a therapy dog visit
-                      </p>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-primary mb-2">79%</div>
+                      <div className="text-sm text-muted-foreground">Report Reduced Stress</div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-muted-foreground">
-                        <span className="font-semibold text-foreground">85%</span> of healthcare workers feel less stressed and more satisfied after therapy dog interactions
-                      </p>
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-primary mb-2">85%</div>
+                      <div className="text-sm text-muted-foreground">Feel Less Anxious</div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-muted-foreground">
-                        Children in reading-to-dog programs show significant improvements in reading scores and confidence
-                      </p>
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-primary mb-2">92%</div>
+                      <div className="text-sm text-muted-foreground">Request Return Visits</div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-muted-foreground">
-                        Seniors in care homes report less loneliness and depression with regular therapy dog visits
-                      </p>
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-primary mb-2">100%</div>
+                      <div className="text-sm text-muted-foreground">Smiles Guaranteed</div>
                     </div>
                   </div>
                   
-                  <div className="mt-6 pt-4 border-t border-border/50">
+                  <div className="mt-8 pt-6 border-t border-border/50">
                     <p className="text-xs text-muted-foreground italic text-center">
-                      (Sources: peer-reviewed hospital, school, and elder care studies, 2015–2024)
+                      Sources: peer-reviewed hospital, school, and elder care studies, 2015–2024
                     </p>
                   </div>
                 </CardContent>
