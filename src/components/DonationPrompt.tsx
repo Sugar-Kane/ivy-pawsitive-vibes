@@ -85,7 +85,13 @@ const DonationPrompt = ({ context = "general", compact = false }: DonationPrompt
               Make a Donation
             </Button>
           </Link>
-          <Link to="/shop">
+          <Link 
+            to="/shop" 
+            onClick={() => {
+              // Scroll to top when navigating to shop
+              setTimeout(() => window.scrollTo(0, 0), 100);
+            }}
+          >
             <Button variant="outline" className="w-full sm:w-auto">
               Shop & Support
             </Button>
