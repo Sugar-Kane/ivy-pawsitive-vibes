@@ -1,15 +1,45 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Award, Users, Calendar, Star, MapPin } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const About = () => {
-  // Placeholder images for gallery
-  const galleryImages = [
+  // Extended gallery images pool
+  const allGalleryImages = [
     { src: "https://images.unsplash.com/photo-1472396961693-142e6e269027?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Ivy with a patient in the garden" },
     { src: "https://images.unsplash.com/photo-1439886183900-e79ec0057170?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Ivy during a therapy session" },
     { src: "https://images.unsplash.com/photo-1485833077593-4278bba3f11f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Ivy visiting a care facility" },
     { src: "https://images.unsplash.com/photo-1452378174528-3090a4bba7b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Ivy playing with children" },
+    { src: "https://images.unsplash.com/photo-1551717743-49959800b1f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Ivy comforting an elderly patient" },
+    { src: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Ivy in a hospital corridor" },
+    { src: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Ivy with healthcare workers" },
+    { src: "https://images.unsplash.com/photo-1560743173-567a3b5658b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Ivy during reading therapy" },
+    { src: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Ivy visiting a nursing home" },
+    { src: "https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Ivy bringing joy to patients" },
+    { src: "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Ivy in a school setting" },
+    { src: "https://images.unsplash.com/photo-1594736797933-d0f1dcf8cd87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", alt: "Ivy providing emotional support" }
   ];
+
+  // State for current gallery images (4 at a time)
+  const [currentImageSet, setCurrentImageSet] = useState(0);
+  
+  // Get current 4 images to display
+  const getCurrentImages = () => {
+    const startIndex = currentImageSet * 4;
+    return allGalleryImages.slice(startIndex, startIndex + 4);
+  };
+
+  // Auto-rotate images every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageSet((prev) => {
+        const maxSets = Math.ceil(allGalleryImages.length / 4) - 1;
+        return prev >= maxSets ? 0 : prev + 1;
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [allGalleryImages.length]);
 
   return (
     <div className="bg-gradient-warm">
@@ -170,7 +200,7 @@ const About = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {galleryImages.map((image, index) => (
+            {getCurrentImages().map((image, index) => (
               <Card key={index} className="group overflow-hidden shadow-soft hover:shadow-warm transition-all duration-300 cursor-pointer">
                 <div className="aspect-square overflow-hidden">
                   <img
