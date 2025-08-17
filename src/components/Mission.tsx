@@ -49,20 +49,6 @@ const Mission = () => {
           </p>
         </div>
 
-        {/* Mission Statement */}
-        <div className="bg-gradient-hero rounded-3xl p-8 md:p-12 mb-16 shadow-warm">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="text-6xl mb-6 animate-gentle-float">🐾</div>
-            <blockquote className="text-xl md:text-2xl font-medium text-foreground leading-relaxed mb-6">
-              "To provide compassionate therapy dog services that promote healing, reduce anxiety, 
-              and bring moments of joy to individuals in healthcare facilities, schools, and our community."
-            </blockquote>
-            <div className="flex items-center justify-center space-x-4 text-muted-foreground">
-              <Smile className="w-6 h-6" />
-              <span className="text-sm font-medium">— The Ivy's Therapy Paws Foundation</span>
-            </div>
-          </div>
-        </div>
 
         {/* Services Grid */}
         <div className="mb-16">
