@@ -3,6 +3,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, X } from "lucide-react";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface NewsletterSignupProps {
   variant?: "inline" | "popup";
@@ -12,15 +14,60 @@ interface NewsletterSignupProps {
 const NewsletterSignup = ({ variant = "inline", onClose }: NewsletterSignupProps) => {
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubscribed(true);
-    setTimeout(() => {
-      if (variant === "popup" && onClose) {
-        onClose();
+    setIsLoading(true);
+    
+    try {
+      // Add to email subscribers table
+      const { error: dbError } = await supabase
+        .from('email_subscribers')
+        .insert([
+          {
+            email: email,
+            subscribed_at: new Date().toISOString()
+          }
+        ]);
+
+      if (dbError) throw dbError;
+
+      // Send welcome email
+      const { error: emailError } = await supabase.functions.invoke('send-notification-email', {
+        body: {
+          email,
+          type: 'newsletter_confirmation'
+        }
+      });
+
+      if (emailError) {
+        console.error('Email sending failed:', emailError);
+        // Still show success to user since subscription was saved
       }
-    }, 2000);
+
+      setIsSubscribed(true);
+      toast({
+        title: "Successfully subscribed!",
+        description: "Welcome to Ivy's newsletter. Check your email for confirmation.",
+      });
+
+      setTimeout(() => {
+        if (variant === "popup" && onClose) {
+          onClose();
+        }
+      }, 2000);
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      toast({
+        title: "Subscription failed",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isSubscribed) {
@@ -70,8 +117,13 @@ const NewsletterSignup = ({ variant = "inline", onClose }: NewsletterSignupProps
             required
             className="border-accent/30 focus:border-accent"
           />
-          <Button type="submit" variant="default" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-            Subscribe to Updates
+          <Button 
+            type="submit" 
+            variant="default" 
+            className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
+            disabled={isLoading}
+          >
+            {isLoading ? "Subscribing..." : "Subscribe to Updates"}
           </Button>
         </form>
       </CardContent>
