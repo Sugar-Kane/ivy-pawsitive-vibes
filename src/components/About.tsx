@@ -57,27 +57,24 @@ const About = () => {
                 </h2>
                 <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                   <p>
-                    Our journey began when we witnessed the incredible bond between humans and therapy animals. 
-                    Ivy, with her gentle nature and intuitive understanding of human emotions, showed a natural 
-                    talent for providing comfort to those in need.
+                    Ivy's story began in the rolling fields of Ohio, where her gentle spirit was clear from the start. 
+                    From the moment she joined her family, she showed a gift for connecting with people, running to 
+                    comfort, leaning in for reassurance, and brightening every room she entered.
                   </p>
                   <p>
-                    After completing rigorous certification training through Pet Partners, Ivy became a registered 
-                    therapy dog, ready to spread love and healing in hospitals, nursing homes, schools, and 
-                    community centers.
+                    With dedicated training and certification through Pet Partners, Ivy turned that natural gift into 
+                    a calling. She worked her way through obedience, advanced skills, and therapy dog training, proving 
+                    that her heart was just as strong as her discipline.
                   </p>
-                  
-                  {/* Pull Quote */}
-                  <blockquote className="border-l-4 border-primary pl-6 py-4 bg-accent/10 rounded-r-lg my-8">
-                    <p className="text-xl italic text-foreground font-medium">
-                      "Her soft golden curls and warm brown eyes have the power to light up any room she enters."
-                    </p>
-                  </blockquote>
-                  
                   <p>
-                    Every visit is a reminder of the profound impact that the unconditional love of a therapy 
-                    dog can have on someone's day, week, or even life. Through Ivy's Therapy Paws, we're 
-                    committed to making these healing moments accessible to everyone who needs them.
+                    Now in Midland, TX, Ivy brings her warmth to hospitals, nursing homes, schools, and workplaces. 
+                    Her soft curls invite hands to pet, her calm presence eases stress, and her playful spark reminds 
+                    people to smile. Whether she's sitting beside a patient in hospice or greeting a classroom full of 
+                    children, Ivy creates moments that heal.
+                  </p>
+                  <p>
+                    Inviting Ivy isn't just about a visit. It's about sharing the love of a therapy dog whose story is 
+                    rooted in kindness, joy, and the simple power of being there when someone needs it most.
                   </p>
                 </div>
               </div>
