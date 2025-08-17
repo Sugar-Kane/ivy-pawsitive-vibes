@@ -62,7 +62,7 @@ const About = () => {
                     comfort, leaning in for reassurance, and brightening every room she entered.
                   </p>
                   <p>
-                    With dedicated training and certification through Pet Partners, Ivy turned that natural gift into 
+                    With dedicated training and certification, Ivy turned that natural gift into 
                     a calling. She worked her way through obedience, advanced skills, and therapy dog training, proving 
                     that her heart was just as strong as her discipline.
                   </p>
@@ -127,7 +127,7 @@ const About = () => {
                     </li>
                     <li className="flex items-center space-x-3">
                       <div className="w-2 h-2 bg-primary rounded-full"></div>
-                      <span>Certified through Pet Partners therapy dog program</span>
+                      <span>Certified therapy dog with specialized training</span>
                     </li>
                     <li className="flex items-center space-x-3">
                       <div className="w-2 h-2 bg-primary rounded-full"></div>
