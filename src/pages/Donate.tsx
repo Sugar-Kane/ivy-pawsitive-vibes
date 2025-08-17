@@ -16,7 +16,7 @@ const DonatePage = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showCanceled, setShowCanceled] = useState(false);
   const { toast } = useToast();
-  const donationAmounts = [25, 50, 100, 250, 500];
+  const donationAmounts = [10, 25, 50];
 
   // Check URL parameters for payment status
   useEffect(() => {
