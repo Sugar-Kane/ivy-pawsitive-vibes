@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Heart, Calendar, ShoppingBag, DollarSign, Camera, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import UserMenu from "@/components/UserMenu";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
 
   const navItems = [
     { name: "About", href: "/about", icon: Heart },
@@ -44,12 +46,12 @@ const Navigation = () => {
                 <span className="font-medium">{item.name}</span>
               </Link>
             ))}
-            <UserMenu />
+            {user && <UserMenu />}
           </div>
 
           {/* Mobile menu button and user menu */}
           <div className="md:hidden flex items-center gap-2">
-            <UserMenu />
+            {user && <UserMenu />}
             <Button
               variant="ghost"
               size="sm"

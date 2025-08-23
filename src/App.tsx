@@ -7,7 +7,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import AuthGuard from "@/components/AuthGuard";
 import Index from "./pages/Index";
 import AboutPage from "./pages/About";
-import AuthPage from "./pages/Auth";
+import AdminLogin from "./pages/AdminLogin";
 import SchedulePage from "./pages/Schedule";
 import DonatePage from "./pages/Donate";
 import ShopPage from "./pages/Shop";
@@ -29,7 +29,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/mission" element={<AboutPage />} />
-            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/admin-login" element={<AdminLogin />} />
             <Route path="/schedule" element={<SchedulePage />} />
             <Route path="/donate" element={<DonatePage />} />
             <Route path="/shop" element={<ShopPage />} />

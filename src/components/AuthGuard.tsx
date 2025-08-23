@@ -16,8 +16,8 @@ const AuthGuard = ({ children, requireAdmin = false }: AuthGuardProps) => {
   useEffect(() => {
     if (!loading) {
       if (!user) {
-        // Redirect to auth page if not logged in
-        navigate('/auth', { 
+        // Redirect to admin login page if not logged in
+        navigate('/admin-login', { 
           state: { from: location },
           replace: true 
         });
