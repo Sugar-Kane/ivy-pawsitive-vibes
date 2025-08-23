@@ -29,7 +29,7 @@ const Navigation = () => {
             </div>
             <div className="flex items-center">
               <h1 className="font-heading text-xl font-bold text-foreground">
-                Ivy's Therapy Paws
+                The Ivy Project
               </h1>
             </div>
           </Link>

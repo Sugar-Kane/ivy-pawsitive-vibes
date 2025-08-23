@@ -61,7 +61,7 @@ const ContactPage = () => {
                   
                   <div className="space-y-2">
                     <Label htmlFor="phone">Phone Number</Label>
-                    <Input id="phone" type="tel" placeholder="(555) 123-4567" />
+                    <Input id="phone" type="tel" placeholder="(209) 819-9985" />
                   </div>
                   
                   <div className="space-y-2">
@@ -105,7 +105,7 @@ const ContactPage = () => {
                       </div>
                       <div>
                         <p className="font-medium">Phone</p>
-                        <p className="text-sm text-muted-foreground">(555) 123-4567</p>
+                        <p className="text-sm text-muted-foreground">(209) 819-9985</p>
                       </div>
                     </div>
                     
@@ -125,7 +125,7 @@ const ContactPage = () => {
                       </div>
                       <div>
                         <p className="font-medium">Service Area</p>
-                        <p className="text-sm text-muted-foreground">30-mile radius from downtown</p>
+                        <p className="text-sm text-muted-foreground">Midland, TX Area</p>
                       </div>
                     </div>
                   </CardContent>

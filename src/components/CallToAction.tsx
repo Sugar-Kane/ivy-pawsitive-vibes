@@ -108,8 +108,8 @@ const CallToAction = () => {
                 </div>
                 <div>
                   <div className="font-medium text-foreground">Call Us</div>
-                  <a href="tel:+1234567890" className="text-primary hover:underline">
-                    (123) 456-7890
+                  <a href="tel:+12098199985" className="text-primary hover:underline">
+                    (209) 819-9985
                   </a>
                 </div>
               </div>
@@ -121,7 +121,7 @@ const CallToAction = () => {
                 <div>
                   <div className="font-medium text-foreground">Visit Us</div>
                   <div className="text-muted-foreground text-sm">
-                    Serving the Greater Metro Area
+                    Serving Midland, TX Area
                   </div>
                 </div>
               </div>

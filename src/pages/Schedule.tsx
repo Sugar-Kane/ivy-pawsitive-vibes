@@ -25,7 +25,7 @@ const SchedulePage = () => {
               
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
                 Schedule a therapy visit with Ivy to bring comfort, joy, and healing to your facility, event, or loved ones. 
-                We serve hospitals, nursing homes, schools, and private events.
+                We serve workplaces, hospitals, nursing homes, schools, and private events.
               </p>
             </div>
 
@@ -44,7 +44,7 @@ const SchedulePage = () => {
                 <div className="bg-background rounded-3xl p-6 shadow-warm border border-border/50 text-center">
                   <Phone className="w-8 h-8 text-primary mx-auto mb-4" />
                   <h4 className="font-heading font-bold mb-2">Call Us</h4>
-                  <p className="text-sm text-muted-foreground">(555) 123-4567</p>
+                  <p className="text-sm text-muted-foreground">(209) 819-9985</p>
                 </div>
                 
                 <div className="bg-background rounded-3xl p-6 shadow-warm border border-border/50 text-center">

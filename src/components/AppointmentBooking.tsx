@@ -135,7 +135,7 @@ const AppointmentBooking = () => {
             What happens next?
           </h5>
           <ul className="text-sm text-muted-foreground space-y-1">
-            <li>• We'll review your request within 24 hours</li>
+            <li>• We'll review your request within 24–48 hours</li>
             <li>• Our team will contact you to confirm details</li>
             <li>• We'll coordinate the perfect visit for your needs</li>
           </ul>
@@ -222,7 +222,7 @@ const AppointmentBooking = () => {
                   <FormItem>
                     <FormLabel>Phone Number *</FormLabel>
                     <FormControl>
-                      <Input placeholder="(555) 123-4567" {...field} />
+                      <Input placeholder="(209) 819-9985" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -365,7 +365,7 @@ const AppointmentBooking = () => {
           What happens next?
         </h5>
         <ul className="text-sm text-muted-foreground space-y-1">
-          <li>• We'll review your request within 24 hours</li>
+          <li>• We'll review your request within 24–48 hours</li>
           <li>• Our team will contact you to confirm details</li>
           <li>• We'll coordinate the perfect visit for your needs</li>
         </ul>

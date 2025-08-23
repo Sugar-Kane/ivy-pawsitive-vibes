@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Heart, Calendar, Gift, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import ivyHero from "@/assets/ivy-hero.jpg";
+import ivyHero from "@/assets/ivy-hero-new.jpg"; // Updated hero image
 
 const Hero = () => {
   return (
@@ -80,15 +80,15 @@ const Hero = () => {
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 pt-10 border-t border-border/30 max-w-lg mx-auto lg:mx-0">
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-primary mb-1">500+</div>
+                <div className="text-2xl md:text-3xl font-bold text-primary mb-1">50+</div>
                 <div className="text-sm text-muted-foreground">Visits Made</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-primary mb-1">50+</div>
+                <div className="text-2xl md:text-3xl font-bold text-primary mb-1">10+</div>
                 <div className="text-sm text-muted-foreground">Facilities</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-primary mb-1">1000+</div>
+                <div className="text-2xl md:text-3xl font-bold text-primary mb-1">100+</div>
                 <div className="text-sm text-muted-foreground">Smiles Created</div>
               </div>
             </div>

@@ -132,7 +132,7 @@ const About = () => {
                 <Card className="bg-card/50 backdrop-blur-sm border-border/50 shadow-soft hover:shadow-warm transition-warm">
                   <CardContent className="p-6 text-center">
                     <Heart className="w-8 h-8 text-primary mx-auto mb-3" fill="currentColor" />
-                    <div className="text-2xl font-bold text-foreground mb-1">500+</div>
+                    <div className="text-2xl font-bold text-foreground mb-1">100+</div>
                     <div className="text-sm text-muted-foreground">Lives Touched</div>
                   </CardContent>
                 </Card>
@@ -140,7 +140,7 @@ const About = () => {
                 <Card className="bg-card/50 backdrop-blur-sm border-border/50 shadow-soft hover:shadow-warm transition-warm">
                   <CardContent className="p-6 text-center">
                     <Calendar className="w-8 h-8 text-primary mx-auto mb-3" />
-                    <div className="text-2xl font-bold text-foreground mb-1">Weekly</div>
+                    <div className="text-2xl font-bold text-foreground mb-1">Monthly</div>
                     <div className="text-sm text-muted-foreground">Visits</div>
                   </CardContent>
                 </Card>
