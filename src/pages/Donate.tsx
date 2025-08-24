@@ -205,7 +205,7 @@ const DonatePage = () => {
                     <Users className="w-6 h-6 text-accent" />
                   </div>
                   <CardTitle className="text-xl">$25</CardTitle>
-                  <CardDescription>Funds for 1 hour session of a therapy visit</CardDescription>
+                  <CardDescription>Funds a 1 hour session of a therapy visit</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="text-sm text-muted-foreground space-y-2">
@@ -251,7 +251,7 @@ const DonatePage = () => {
                           variant={selectedAmount === amount ? "default" : "outline"}
                           className={`h-12 transition-all ${
                             selectedAmount === amount 
-                              ? "bg-primary text-primary-foreground border-primary" 
+                              ? "bg-primary text-primary-foreground border-primary ring-2 ring-primary/20" 
                               : "hover:bg-primary hover:text-primary-foreground hover:border-primary"
                           }`}
                           onClick={() => handleAmountSelect(amount)}

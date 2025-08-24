@@ -2,79 +2,41 @@ import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Camera, Play } from "lucide-react";
+import { Heart, Camera, Play, X } from "lucide-react";
 import StickyBookingCTA from "@/components/StickyBookingCTA";
 import DonationPrompt from "@/components/DonationPrompt";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const GalleryPage = () => {
+  // State for modal display
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+
+  // Sample gallery items with event dates - sorted by date descending
   const galleryItems = [
     {
       id: 1,
       type: "photo",
-      title: "Hospital Visit - Children's Ward",
-      description: "Ivy brings smiles to young patients during recovery",
-      category: "Hospital",
-      emoji: "🏥"
-    },
-    {
-      id: 2,
-      type: "video",
-      title: "Nursing Home Music Therapy",
-      description: "Ivy participates in a group music therapy session",
-      category: "Senior Care",
-      emoji: "🎵"
-    },
-    {
-      id: 3,
-      type: "photo",
-      title: "School Reading Program",
-      description: "Children read to Ivy in the school library",
-      category: "Education",
-      emoji: "📚"
-    },
-    {
-      id: 4,
-      type: "photo",
-      title: "Veteran Support Group",
-      description: "Ivy provides comfort during a support group meeting",
-      category: "Veterans",
-      emoji: "🇺🇸"
-    },
-    {
-      id: 5,
-      type: "video",
-      title: "Birthday Party Visit",
-      description: "Ivy helps celebrate a special 90th birthday",
-      category: "Special Events",
-      emoji: "🎂"
-    },
-    {
-      id: 6,
-      type: "photo",
-      title: "Physical Therapy Session",
-      description: "Ivy motivates patients during rehabilitation",
-      category: "Rehabilitation",
-      emoji: "💪"
-    },
-    {
-      id: 7,
-      type: "photo",
       title: "Community Center Visit",
       description: "Ivy meets families at a community wellness event",
       category: "Community",
-      emoji: "🏘️"
+      emoji: "🏘️",
+      eventDate: "2025-08-20",
+      newsletterContent: "What an amazing day at the community center! Ivy had the chance to meet so many wonderful families during our wellness event. The joy on children's faces as they interacted with Ivy was absolutely heartwarming. We're grateful for the opportunity to be part of such meaningful community gatherings."
     },
     {
-      id: 8,
-      type: "video",
-      title: "Therapy Training Session",
-      description: "Behind-the-scenes look at Ivy's ongoing training",
-      category: "Training",
-      emoji: "🎓"
+      id: 2,
+      type: "photo",
+      title: "Hospital Visit - Children's Ward",
+      description: "Ivy brings smiles to young patients during recovery",
+      category: "Hospital",
+      emoji: "🏥",
+      eventDate: "2025-08-15",
+      newsletterContent: "Today's visit to the children's ward was particularly special. Ivy spent time with several young patients who are on their road to recovery. The healing power of her gentle presence was evident as we watched children light up with smiles and laughter. These moments remind us why therapy dog work is so important."
     }
-  ];
+  ].sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime()); // Sort by date descending
 
   const categories = ["All", "Hospital", "Senior Care", "Education", "Veterans", "Special Events", "Rehabilitation", "Community", "Training"];
 
@@ -116,7 +78,11 @@ const GalleryPage = () => {
             {/* Gallery Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {galleryItems.map((item) => (
-                <Card key={item.id} className="group hover:shadow-soft transition-gentle cursor-pointer overflow-hidden">
+                <Card 
+                  key={item.id} 
+                  className="group hover:shadow-soft transition-gentle cursor-pointer overflow-hidden"
+                  onClick={() => setSelectedItem(item)}
+                >
                   <CardContent className="p-0">
                     {/* Image/Video Thumbnail */}
                     <div className="relative aspect-square bg-gradient-warm flex items-center justify-center text-6xl text-background/80 overflow-hidden">
@@ -146,8 +112,12 @@ const GalleryPage = () => {
                         <Heart className="w-4 h-4 text-muted-foreground hover:text-primary hover:fill-primary transition-colors cursor-pointer ml-2 flex-shrink-0" />
                       </div>
                       
-                      <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+                      <p className="text-xs text-muted-foreground mb-2 leading-relaxed">
                         {item.description}
+                      </p>
+                      
+                      <p className="text-xs text-primary font-medium mb-3">
+                        {new Date(item.eventDate).toLocaleDateString()}
                       </p>
                       
                       <Badge variant="outline" className="text-xs">
@@ -173,21 +143,6 @@ const GalleryPage = () => {
                 </div>
               </div>
             </div>
-            
-            {/* Book a Visit Prompt */}
-            <div className="text-center mt-12">
-              <div className="bg-gradient-warm rounded-3xl p-8 shadow-warm text-background max-w-2xl mx-auto">
-                <h3 className="text-2xl font-heading font-bold mb-4">Inspired by These Moments?</h3>
-                <p className="text-background/90 mb-6">
-                  Book a therapy visit with Ivy and create your own special memories that bring joy and healing.
-                </p>
-                <Link to="/schedule">
-                  <Button variant="outline" className="bg-transparent border-background text-background hover:bg-background hover:text-foreground">
-                    Schedule a Visit with Ivy
-                  </Button>
-                </Link>
-              </div>
-            </div>
           </div>
         </section>
         
@@ -200,6 +155,43 @@ const GalleryPage = () => {
       </div>
       <Footer />
       <StickyBookingCTA />
+
+      {/* Gallery Item Detail Modal */}
+      <Dialog open={!!selectedItem} onOpenChange={() => setSelectedItem(null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between">
+              <span>{selectedItem?.title}</span>
+              <Badge variant="outline">{selectedItem?.category}</Badge>
+            </DialogTitle>
+          </DialogHeader>
+          
+          {selectedItem && (
+            <div className="space-y-4">
+              {/* Image placeholder */}
+              <div className="aspect-video bg-gradient-warm flex items-center justify-center text-8xl text-background/80 rounded-lg">
+                {selectedItem.emoji}
+              </div>
+              
+              {/* Event Date */}
+              <div className="text-sm text-primary font-medium">
+                Event Date: {new Date(selectedItem.eventDate).toLocaleDateString('en-US', { 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}
+              </div>
+              
+              {/* Newsletter Content */}
+              <div className="prose prose-sm max-w-none">
+                <p className="text-muted-foreground leading-relaxed">
+                  {selectedItem.newsletterContent}
+                </p>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

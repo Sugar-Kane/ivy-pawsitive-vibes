@@ -2,58 +2,37 @@ import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ShoppingBag, Heart, Star } from "lucide-react";
+import { ShoppingBag, Heart, Star, X } from "lucide-react";
 import StickyBookingCTA from "@/components/StickyBookingCTA";
 import DonationPrompt from "@/components/DonationPrompt";
+import { useState } from "react";
 
 const ShopPage = () => {
+  // State for dismissible construction banner
+  const [showBanner, setShowBanner] = useState(() => {
+    return !sessionStorage.getItem('shop-banner-dismissed');
+  });
+
+  const dismissBanner = () => {
+    setShowBanner(false);
+    sessionStorage.setItem('shop-banner-dismissed', 'true');
+  };
+
   const products = [
     {
       id: 1,
-      name: "Ivy's Therapy Paws T-Shirt",
-      price: 25,
-      image: "🐕",
-      description: "Soft cotton tee featuring Ivy's paw print design",
+      name: "Ivy's Ebook",
+      price: 15,
+      image: "📖",
+      description: "Digital guide to therapy dog experiences and stories",
       rating: 5
     },
     {
       id: 2,
-      name: "Golden Doodle Therapy Mug",
-      price: 18,
-      image: "☕",
-      description: "Ceramic mug with inspirational therapy dog quotes",
-      rating: 5
-    },
-    {
-      id: 3,
-      name: "Plush Ivy Companion",
-      price: 35,
-      image: "🧸",
-      description: "Soft plush version of Ivy for comfort and cuddles",
-      rating: 5
-    },
-    {
-      id: 4,
-      name: "Therapy Paws Tote Bag",
-      price: 22,
-      image: "👜",
-      description: "Eco-friendly canvas bag with Ivy's mission message",
-      rating: 5
-    },
-    {
-      id: 5,
-      name: "Paw Print Sticker Set",
-      price: 8,
-      image: "🐾",
-      description: "Waterproof stickers featuring Ivy's paw prints",
-      rating: 5
-    },
-    {
-      id: 6,
-      name: "Therapy Dog Calendar",
-      price: 15,
-      image: "📅",
-      description: "12-month calendar with photos from Ivy's visits",
+      name: "Ivy's Ebook Training Guide",
+      price: 25,
+      image: "🎓",
+      description: "Comprehensive training manual for therapy dog handlers",
       rating: 5
     }
   ];
@@ -79,6 +58,26 @@ const ShopPage = () => {
                 Show your support with our exclusive merchandise collection.
               </p>
             </div>
+
+            {/* Construction Banner */}
+            {showBanner && (
+              <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mb-8 flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl">🚧</span>
+                  <p className="text-sm font-medium text-accent-foreground">
+                    Our shop is under construction. Limited products available while we build our digital catalog.
+                  </p>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={dismissBanner}
+                  className="text-accent hover:text-accent-foreground"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            )}
 
             {/* Products Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
@@ -154,9 +153,9 @@ const ShopPage = () => {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h3 className="text-2xl font-heading font-bold mb-4">Every Purchase Supports Ivy's Mission</h3>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                100% of proceeds go directly toward funding therapy visits, training, and supplies needed to bring joy and healing to our community.
-              </p>
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  All of proceeds go directly toward funding therapy visits, training, and supplies needed to bring joy and healing to our community.
+                </p>
               <DonationPrompt compact />
             </div>
           </div>

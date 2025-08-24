@@ -38,7 +38,7 @@ const SchedulePage = () => {
                 <div className="bg-background rounded-3xl p-6 shadow-warm border border-border/50 text-center">
                   <Clock className="w-8 h-8 text-primary mx-auto mb-4" />
                   <h4 className="font-heading font-bold mb-2">Available Hours</h4>
-                  <p className="text-sm text-muted-foreground">Monday - Friday<br />10 AM - 4 PM</p>
+                  <p className="text-sm text-muted-foreground">By appointment only</p>
                 </div>
                 
                 <div className="bg-background rounded-3xl p-6 shadow-warm border border-border/50 text-center">
@@ -50,7 +50,7 @@ const SchedulePage = () => {
                 <div className="bg-background rounded-3xl p-6 shadow-warm border border-border/50 text-center">
                   <MapPin className="w-8 h-8 text-primary mx-auto mb-4" />
                   <h4 className="font-heading font-bold mb-2">Service Area</h4>
-                  <p className="text-sm text-muted-foreground">30-mile radius from downtown</p>
+                  <p className="text-sm text-muted-foreground">15-mile radius from downtown Midland, TX</p>
                 </div>
               </div>
             </div>
