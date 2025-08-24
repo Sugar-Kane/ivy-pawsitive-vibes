@@ -12,6 +12,7 @@ import AdminLogin from "./pages/AdminLogin";
 import SchedulePage from "./pages/Schedule";
 import DonatePage from "./pages/Donate";
 import ShopPage from "./pages/Shop";
+import ShopSuccessPage from "./pages/ShopSuccess";
 import GalleryPage from "./pages/Gallery";
 import ContactPage from "./pages/Contact";
 import AdminNewsletter from "./pages/AdminNewsletter";
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="/schedule" element={<SchedulePage />} />
             <Route path="/donate" element={<DonatePage />} />
             <Route path="/shop" element={<ShopPage />} />
+            <Route path="/shop/success" element={<ShopSuccessPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route 

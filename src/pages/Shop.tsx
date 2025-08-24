@@ -6,8 +6,12 @@ import { ShoppingBag, Heart, Star, X } from "lucide-react";
 import StickyBookingCTA from "@/components/StickyBookingCTA";
 import DonationPrompt from "@/components/DonationPrompt";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const ShopPage = () => {
+  const { toast } = useToast();
+  
   // State for dismissible construction banner
   const [showBanner, setShowBanner] = useState(() => {
     return !sessionStorage.getItem('shop-banner-dismissed');
@@ -16,6 +20,31 @@ const ShopPage = () => {
   const dismissBanner = () => {
     setShowBanner(false);
     sessionStorage.setItem('shop-banner-dismissed', 'true');
+  };
+
+  // Handle product purchase
+  const handlePurchase = async (productName: string, amount: number) => {
+    try {
+      const { data, error } = await supabase.functions.invoke('create-payment', {
+        body: { productName, amount }
+      });
+
+      if (error) throw error;
+
+      // Redirect to Stripe Checkout
+      if (data?.url) {
+        window.open(data.url, '_blank');
+      } else {
+        throw new Error('No checkout URL received');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      toast({
+        title: "Payment Error",
+        description: "Failed to initiate payment. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const products = [
@@ -100,9 +129,13 @@ const ShopPage = () => {
                   <CardContent>
                     <div className="flex items-center justify-between">
                       <span className="text-2xl font-bold text-primary">${product.price}</span>
-                      <Button variant="golden" size="sm">
+                      <Button 
+                        variant="golden" 
+                        size="sm"
+                        onClick={() => handlePurchase(product.name, product.price * 100)} // Convert to cents
+                      >
                         <ShoppingBag className="w-4 h-4 mr-2" />
-                        Add to Cart
+                        Buy Now
                       </Button>
                     </div>
                   </CardContent>
