@@ -156,18 +156,18 @@ const ContactPage = () => {
                 </Card>
 
                 {/* Quick Links */}
-                <Card className="bg-primary text-primary-foreground shadow-warm border border-primary/20">
+                <Card className="bg-background border-primary/20 shadow-warm">
                   <CardHeader>
-                    <CardTitle className="text-xl text-primary-foreground">Quick Links</CardTitle>
+                    <CardTitle className="text-xl text-foreground">Quick Links</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    <Button variant="outline" className="w-full bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                    <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                       Schedule Emergency Visit
                     </Button>
-                    <Button variant="outline" className="w-full bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                    <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                       Request Information Packet
                     </Button>
-                    <Button variant="outline" className="w-full bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                    <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                       Volunteer Opportunities
                     </Button>
                   </CardContent>

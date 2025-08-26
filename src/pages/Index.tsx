@@ -4,7 +4,7 @@ import StickyBookingCTA from "@/components/StickyBookingCTA";
 
 const Index = () => {
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="min-h-screen">
       <Navigation />
       <Hero />
       <StickyBookingCTA />

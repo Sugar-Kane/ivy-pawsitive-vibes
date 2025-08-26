@@ -37,8 +37,8 @@ const SchedulePage = () => {
               <div className="grid md:grid-cols-3 gap-8">
                 <div className="bg-background rounded-3xl p-6 shadow-warm border border-border/50 text-center">
                   <Clock className="w-8 h-8 text-primary mx-auto mb-4" />
-                  <h4 className="font-heading font-bold mb-2">Available Hours</h4>
-                  <p className="text-sm text-muted-foreground">By appointment only</p>
+                  <h4 className="font-heading font-bold mb-2">By appointment only</h4>
+                  <p className="text-sm text-muted-foreground">Flexible scheduling available</p>
                 </div>
                 
                 <div className="bg-background rounded-3xl p-6 shadow-warm border border-border/50 text-center">
