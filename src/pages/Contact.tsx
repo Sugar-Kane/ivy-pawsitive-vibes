@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Phone, Mail, MapPin, Clock, Send, MessageCircle } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Download, Construction } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ContactPage = () => {
   return (
@@ -61,7 +62,7 @@ const ContactPage = () => {
                   
                   <div className="space-y-2">
                     <Label htmlFor="phone">Phone Number</Label>
-                    <Input id="phone" type="tel" placeholder="(209) 819-9985" />
+                    <Input id="phone" type="tel" placeholder="(555) 123-4567" />
                   </div>
                   
                   <div className="space-y-2">
@@ -140,17 +141,9 @@ const ContactPage = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    <div className="flex justify-between items-center py-2 border-b border-border/30">
-                      <span className="font-medium">Monday - Friday</span>
-                      <span className="text-muted-foreground">10:00 AM - 4:00 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center py-2 border-b border-border/30">
-                      <span className="font-medium">Saturday</span>
-                      <span className="text-muted-foreground">By appointment</span>
-                    </div>
                     <div className="flex justify-between items-center py-2">
-                      <span className="font-medium">Sunday</span>
-                      <span className="text-muted-foreground">Emergency only</span>
+                      <span className="font-medium">Monday thru Sunday</span>
+                      <span className="text-muted-foreground">Available by appointment only</span>
                     </div>
                   </CardContent>
                 </Card>
@@ -161,15 +154,37 @@ const ContactPage = () => {
                     <CardTitle className="text-xl text-foreground">Quick Links</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                      Schedule Emergency Visit
+                    <Link to="/schedule">
+                      <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                        Schedule Visit
+                      </Button>
+                    </Link>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                      onClick={() => {
+                        const link = document.createElement('a');
+                        link.href = '/info/ivy-information-packet.pdf';
+                        link.download = 'ivy-information-packet.pdf';
+                        link.click();
+                      }}
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      Download Information Packet
                     </Button>
-                    <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                      Request Information Packet
-                    </Button>
-                    <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                      Volunteer Opportunities
-                    </Button>
+                    <div className="relative">
+                      <Button 
+                        variant="outline" 
+                        className="w-full border-muted text-muted-foreground cursor-not-allowed"
+                        disabled
+                      >
+                        Volunteer Opportunities
+                      </Button>
+                      <div className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1">
+                        <Construction className="w-3 h-3" />
+                        Under Construction
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </div>

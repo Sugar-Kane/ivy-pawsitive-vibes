@@ -2,17 +2,32 @@ import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Camera, Play, X } from "lucide-react";
+import { Heart, Camera, Play, X, Upload, Calendar } from "lucide-react";
 import StickyBookingCTA from "@/components/StickyBookingCTA";
 import DonationPrompt from "@/components/DonationPrompt";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { useState, useMemo } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 
 const GalleryPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { toast } = useToast();
+  
   // State for modal display
   const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [showSubmitModal, setShowSubmitModal] = useState(false);
+  const [submitForm, setSubmitForm] = useState({
+    photos: null as FileList | null,
+    eventDate: "",
+    story: ""
+  });
+  
+  const activeCategory = searchParams.get("category") || "All";
 
   // Sample gallery items with event dates - sorted by date descending
   const galleryItems = [
@@ -39,6 +54,53 @@ const GalleryPage = () => {
   ].sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime()); // Sort by date descending
 
   const categories = ["All", "Hospital", "Senior Care", "Education", "Veterans", "Special Events", "Rehabilitation", "Community", "Training"];
+
+  // Filter gallery items based on active category
+  const filteredItems = useMemo(() => {
+    if (activeCategory === "All") return galleryItems;
+    return galleryItems.filter(item => item.category === activeCategory);
+  }, [activeCategory]);
+
+  const handleCategoryClick = (category: string) => {
+    if (category === "All") {
+      setSearchParams({});
+    } else {
+      setSearchParams({ category });
+    }
+  };
+
+  const handleSubmitPhotos = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!submitForm.photos || !submitForm.eventDate) {
+      toast({
+        title: "Required fields missing",
+        description: "Please select photos and an event date.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Simulate submission (replace with actual backend call)
+    try {
+      // Here you would typically submit to your backend
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast({
+        title: "Photos submitted successfully!",
+        description: "Thank you for sharing your experience with Ivy.",
+      });
+      
+      setShowSubmitModal(false);
+      setSubmitForm({ photos: null, eventDate: "", story: "" });
+    } catch (error) {
+      toast({
+        title: "Submission failed",
+        description: "Please try again later.",
+        variant: "destructive"
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -67,8 +129,18 @@ const GalleryPage = () => {
               {categories.map((category) => (
                 <Badge 
                   key={category}
-                  variant="secondary" 
+                  variant={activeCategory === category ? "default" : "secondary"}
                   className="px-4 py-2 cursor-pointer hover:bg-primary hover:text-primary-foreground transition-gentle"
+                  onClick={() => handleCategoryClick(category)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handleCategoryClick(category);
+                    }
+                  }}
+                  aria-pressed={activeCategory === category}
                 >
                   {category}
                 </Badge>
@@ -77,7 +149,7 @@ const GalleryPage = () => {
 
             {/* Gallery Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {galleryItems.map((item) => (
+              {filteredItems.map((item) => (
                 <Card 
                   key={item.id} 
                   className="group hover:shadow-soft transition-gentle cursor-pointer overflow-hidden"
@@ -137,9 +209,15 @@ const GalleryPage = () => {
                   If Ivy has visited you or your facility, we'd love to feature your photos and stories 
                   in our gallery to inspire others and show the impact of therapy dog visits.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <Button variant="default">Submit Photos</Button>
-                  <Button variant="outline">Share Your Story</Button>
+                <div className="flex justify-center">
+                  <Button 
+                    variant="default"
+                    onClick={() => setShowSubmitModal(true)}
+                    className="flex items-center gap-2"
+                  >
+                    <Upload className="w-4 h-4" />
+                    Submit Photos
+                  </Button>
                 </div>
               </div>
             </div>
@@ -190,6 +268,66 @@ const GalleryPage = () => {
               </div>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Submit Photos Modal */}
+      <Dialog open={showSubmitModal} onOpenChange={setShowSubmitModal}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Submit Photos</DialogTitle>
+          </DialogHeader>
+          
+          <form onSubmit={handleSubmitPhotos} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="photos">Photos *</Label>
+              <Input
+                id="photos"
+                type="file"
+                accept="image/*"
+                multiple
+                required
+                onChange={(e) => setSubmitForm(prev => ({ ...prev, photos: e.target.files }))}
+                className="cursor-pointer"
+              />
+              <p className="text-xs text-muted-foreground">Select one or more photos to share</p>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="eventDate">Event Date *</Label>
+              <div className="relative">
+                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  id="eventDate"
+                  type="date"
+                  required
+                  value={submitForm.eventDate}
+                  onChange={(e) => setSubmitForm(prev => ({ ...prev, eventDate: e.target.value }))}
+                  className="pl-10"
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="story">Your Story (Optional)</Label>
+              <Textarea
+                id="story"
+                placeholder="Share your experience with Ivy..."
+                value={submitForm.story}
+                onChange={(e) => setSubmitForm(prev => ({ ...prev, story: e.target.value }))}
+                className="min-h-[100px]"
+              />
+            </div>
+            
+            <div className="flex gap-3 pt-4">
+              <Button type="button" variant="outline" onClick={() => setShowSubmitModal(false)} className="flex-1">
+                Cancel
+              </Button>
+              <Button type="submit" className="flex-1">
+                Submit
+              </Button>
+            </div>
+          </form>
         </DialogContent>
       </Dialog>
     </div>
