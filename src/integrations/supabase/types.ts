@@ -60,6 +60,7 @@ export type Database = {
         Row: {
           created_at: string
           email: string
+          gallery_notifications: boolean | null
           id: string
           last_notification_sent: string | null
           notification_preferences: Json | null
@@ -71,6 +72,7 @@ export type Database = {
         Insert: {
           created_at?: string
           email: string
+          gallery_notifications?: boolean | null
           id?: string
           last_notification_sent?: string | null
           notification_preferences?: Json | null
@@ -82,6 +84,7 @@ export type Database = {
         Update: {
           created_at?: string
           email?: string
+          gallery_notifications?: boolean | null
           id?: string
           last_notification_sent?: string | null
           notification_preferences?: Json | null
@@ -203,6 +206,45 @@ export type Database = {
           stripe_session_id?: string | null
           updated_at?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      photo_submissions: {
+        Row: {
+          created_at: string
+          event_date: string
+          id: string
+          photo_urls: string[]
+          status: string
+          story: string | null
+          submitted_at: string
+          submitted_by_email: string | null
+          submitted_by_name: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          event_date: string
+          id?: string
+          photo_urls: string[]
+          status?: string
+          story?: string | null
+          submitted_at?: string
+          submitted_by_email?: string | null
+          submitted_by_name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          event_date?: string
+          id?: string
+          photo_urls?: string[]
+          status?: string
+          story?: string | null
+          submitted_at?: string
+          submitted_by_email?: string | null
+          submitted_by_name?: string | null
+          updated_at?: string
         }
         Relationships: []
       }

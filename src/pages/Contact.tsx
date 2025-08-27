@@ -7,10 +7,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Download, Construction } from "lucide-react";
 import { Link } from "react-router-dom";
+import { SEOHead } from "@/components/SEOHead";
 
 const ContactPage = () => {
   return (
     <div className="min-h-screen">
+      <SEOHead 
+        title="Contact Ivy Therapy - Schedule Your Visit"
+        description="Contact Ivy Therapy to schedule a visit, ask questions, or learn more about our therapy dog services in Midland, TX."
+        keywords="contact therapy dog, schedule visit, Midland TX therapy dog, book appointment"
+        canonical="/contact"
+      />
       <Navigation />
       <div className="pt-16">
         <section className="py-20 bg-gradient-soft">

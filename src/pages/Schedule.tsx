@@ -5,10 +5,17 @@ import { Calendar, Clock, MapPin, Phone, Mail } from "lucide-react";
 import ReviewSnippets from "@/components/ReviewSnippets";
 import DonationPrompt from "@/components/DonationPrompt";
 import AppointmentBooking from "@/components/AppointmentBooking";
+import { SEOHead } from "@/components/SEOHead";
 
 const SchedulePage = () => {
   return (
     <div className="min-h-screen">
+      <SEOHead 
+        title="Schedule a Visit - Book Ivy Therapy Dog Services"
+        description="Book a therapy dog visit with Ivy for your hospital, nursing home, school, or workplace in Midland, TX. Flexible scheduling available."
+        keywords="book therapy dog, schedule visit, appointment booking, Midland TX therapy services"
+        canonical="/schedule"
+      />
       <Navigation />
       <div className="pt-16">
         <section className="py-20 bg-gradient-soft">

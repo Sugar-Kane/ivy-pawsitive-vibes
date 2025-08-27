@@ -2,7 +2,7 @@ import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Camera, Play, X, Upload, Calendar } from "lucide-react";
+import { Heart, Camera, Play, X, Upload, Calendar, Mail } from "lucide-react";
 import StickyBookingCTA from "@/components/StickyBookingCTA";
 import DonationPrompt from "@/components/DonationPrompt";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { SEOHead } from "@/components/SEOHead";
+import { supabase } from "@/integrations/supabase/client";
 
 const GalleryPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,11 +23,17 @@ const GalleryPage = () => {
   // State for modal display
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
+  const [showNewsletterModal, setShowNewsletterModal] = useState(false);
   const [submitForm, setSubmitForm] = useState({
     photos: null as FileList | null,
     eventDate: "",
     story: ""
   });
+  const [newsletterForm, setNewsletterForm] = useState({
+    name: "",
+    email: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const activeCategory = searchParams.get("category") || "All";
 
@@ -81,29 +89,116 @@ const GalleryPage = () => {
       return;
     }
 
-    // Simulate submission (replace with actual backend call)
+    setIsSubmitting(true);
+    
     try {
-      // Here you would typically submit to your backend
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Upload photos to Supabase Storage first
+      const photoUrls: string[] = [];
+      
+      for (let i = 0; i < submitForm.photos.length; i++) {
+        const file = submitForm.photos[i];
+        const fileName = `${Date.now()}-${file.name}`;
+        
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('photo-submissions')
+          .upload(fileName, file);
+          
+        if (uploadError) {
+          throw new Error(`Failed to upload ${file.name}`);
+        }
+        
+        photoUrls.push(uploadData.path);
+      }
+      
+      // Submit to backend edge function
+      const { data, error } = await supabase.functions.invoke('submit-photos', {
+        body: {
+          photoUrls,
+          eventDate: submitForm.eventDate,
+          story: submitForm.story || null,
+          submitterName: null, // Could be added to form if needed
+          submitterEmail: null // Could be added to form if needed
+        }
+      });
+      
+      if (error) throw error;
       
       toast({
         title: "Photos submitted successfully!",
-        description: "Thank you for sharing your experience with Ivy.",
+        description: "Thank you for sharing your experience with Ivy. We'll review and add them to the gallery soon.",
       });
       
       setShowSubmitModal(false);
       setSubmitForm({ photos: null, eventDate: "", story: "" });
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Photo submission error:', error);
       toast({
         title: "Submission failed",
-        description: "Please try again later.",
+        description: error.message || "Please try again later.",
         variant: "destructive"
       });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleNewsletterSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!newsletterForm.name || !newsletterForm.email) {
+      toast({
+        title: "Required fields missing",
+        description: "Please enter your name and email.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      const { error } = await supabase
+        .from('email_subscribers')
+        .insert({
+          email: newsletterForm.email,
+          notification_preferences: {
+            newsletter: true,
+            visit_updates: true,
+            donation_updates: false,
+            gallery_notifications: true
+          },
+          verified: false
+        });
+        
+      if (error) throw error;
+      
+      toast({
+        title: "Successfully subscribed!",
+        description: "You'll be notified when new gallery events are posted.",
+      });
+      
+      setShowNewsletterModal(false);
+      setNewsletterForm({ name: "", email: "" });
+    } catch (error: any) {
+      console.error('Newsletter signup error:', error);
+      toast({
+        title: "Signup failed",
+        description: error.message || "Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div className="min-h-screen">
+      <SEOHead 
+        title="Gallery - Ivy's Moments of Joy"
+        description="See Ivy in action bringing comfort and healing to hospitals, nursing homes, schools, and communities across Midland, TX."
+        keywords="therapy dog photos, healing moments, pet therapy gallery, community visits"
+        canonical="/gallery"
+      />
       <Navigation />
       <div className="pt-16">
         <section className="py-20 bg-gradient-soft">
@@ -209,7 +304,7 @@ const GalleryPage = () => {
                   If Ivy has visited you or your facility, we'd love to feature your photos and stories 
                   in our gallery to inspire others and show the impact of therapy dog visits.
                 </p>
-                <div className="flex justify-center">
+                <div className="flex flex-col sm:flex-row justify-center gap-3">
                   <Button 
                     variant="default"
                     onClick={() => setShowSubmitModal(true)}
@@ -217,6 +312,14 @@ const GalleryPage = () => {
                   >
                     <Upload className="w-4 h-4" />
                     Submit Photos
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => setShowNewsletterModal(true)}
+                    className="flex items-center gap-2"
+                  >
+                    <Mail className="w-4 h-4" />
+                    Get Notified of New Events
                   </Button>
                 </div>
               </div>
@@ -323,8 +426,56 @@ const GalleryPage = () => {
               <Button type="button" variant="outline" onClick={() => setShowSubmitModal(false)} className="flex-1">
                 Cancel
               </Button>
-              <Button type="submit" className="flex-1">
-                Submit
+              <Button type="submit" disabled={isSubmitting} className="flex-1">
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Newsletter Signup Modal */}
+      <Dialog open={showNewsletterModal} onOpenChange={setShowNewsletterModal}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Get Notified of New Gallery Events</DialogTitle>
+          </DialogHeader>
+          
+          <form onSubmit={handleNewsletterSignup} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Name *</Label>
+              <Input
+                id="name"
+                type="text"
+                required
+                placeholder="Your name"
+                value={newsletterForm.name}
+                onChange={(e) => setNewsletterForm(prev => ({ ...prev, name: e.target.value }))}
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="email">Email *</Label>
+              <Input
+                id="email"
+                type="email"
+                required
+                placeholder="your.email@example.com"
+                value={newsletterForm.email}
+                onChange={(e) => setNewsletterForm(prev => ({ ...prev, email: e.target.value }))}
+              />
+            </div>
+            
+            <p className="text-sm text-muted-foreground">
+              We'll send you an email notification when new gallery events are posted. You can unsubscribe at any time.
+            </p>
+            
+            <div className="flex gap-3 pt-4">
+              <Button type="button" variant="outline" onClick={() => setShowNewsletterModal(false)} className="flex-1">
+                Cancel
+              </Button>
+              <Button type="submit" disabled={isSubmitting} className="flex-1">
+                {isSubmitting ? "Subscribing..." : "Subscribe"}
               </Button>
             </div>
           </form>

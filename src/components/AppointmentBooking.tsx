@@ -68,7 +68,8 @@ const AppointmentBooking = () => {
     setIsSubmitting(true);
     
     try {
-      const { error } = await supabase
+      // First, create the appointment
+      const { data: appointmentData, error } = await supabase
         .from('appointments')
         .insert({
           name: data.name,
@@ -78,10 +79,29 @@ const AppointmentBooking = () => {
           appointment_date: format(data.appointmentDate, 'yyyy-MM-dd'),
           appointment_time: data.appointmentTime,
           notes: data.notes || null,
-        });
+        })
+        .select()
+        .single();
 
       if (error) {
         throw error;
+      }
+
+      // Send email notification to admin
+      try {
+        const { error: emailError } = await supabase.functions.invoke('send-appointment-notification', {
+          body: {
+            appointmentId: appointmentData.id,
+            sendCustomerConfirmation: false // Can be enabled if customer email field is added
+          }
+        });
+        
+        if (emailError) {
+          console.error('Email notification failed:', emailError);
+          // Don't fail the whole process if email fails
+        }
+      } catch (emailError) {
+        console.error('Email notification error:', emailError);
       }
 
       setConfirmedBooking(data);

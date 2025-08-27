@@ -79,6 +79,22 @@ serve(async (req) => {
       }
     }
 
+    // Send order confirmation email
+    try {
+      const { error: emailError } = await supabaseService.functions.invoke('send-order-confirmation', {
+        body: {
+          orderId: order.id,
+          downloadUrls: signedUrls
+        }
+      });
+      
+      if (emailError) {
+        console.error('Failed to send confirmation email:', emailError);
+      }
+    } catch (emailError) {
+      console.error('Email error:', emailError);
+    }
+
     console.log("Payment verified and order updated:", order.id);
     
     return new Response(JSON.stringify({ 

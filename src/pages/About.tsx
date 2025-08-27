@@ -5,10 +5,17 @@ import Footer from "@/components/Footer";
 import StickyBookingCTA from "@/components/StickyBookingCTA";
 import DonationPrompt from "@/components/DonationPrompt";
 import NewsletterSignup from "@/components/NewsletterSignup";
+import { SEOHead } from "@/components/SEOHead";
 
 const AboutPage = () => {
   return (
     <div className="min-h-screen">
+      <SEOHead 
+        title="About Ivy - Certified Therapy Dog"
+        description="Learn about Ivy, our certified therapy dog, and our mission to bring healing and comfort to communities across Midland, TX."
+        keywords="therapy dog certification, pet therapy, animal assisted therapy, Ivy therapy dog"
+        canonical="/about"
+      />
       <Navigation />
       <div className="pt-16">
         <About />
