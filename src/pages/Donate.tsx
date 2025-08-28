@@ -21,12 +21,33 @@ const DonatePage = () => {
   // Check URL parameters for payment status
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('success') === 'true') {
+    const sessionId = urlParams.get('session_id');
+    
+    if (urlParams.get('success') === 'true' && sessionId) {
+      // Send donation confirmation emails
+      handleDonationSuccess(sessionId);
       setShowSuccess(true);
     } else if (urlParams.get('canceled') === 'true') {
       setShowCanceled(true);
     }
   }, []);
+
+  // Handle successful donation - send confirmation emails
+  const handleDonationSuccess = async (sessionId: string) => {
+    try {
+      // This would typically extract donation details from the session
+      // For testing, we'll use hardcoded values
+      await supabase.functions.invoke('send-donation-confirmation', {
+        body: {
+          donorEmail: "adamkane427@gmail.com",
+          amount: selectedAmount ? selectedAmount * 100 : parseFloat(customAmount) * 100,
+          donorName: "Adam Kane" // For testing
+        }
+      });
+    } catch (error) {
+      console.error('Error sending donation confirmation:', error);
+    }
+  };
 
   const handleAmountSelect = (amount: number) => {
     setSelectedAmount(amount);

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -5,11 +6,120 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Download, Construction } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Download, Construction, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SEOHead } from "@/components/SEOHead";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const ContactPage = () => {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    organization: "",
+    subject: "",
+    message: ""
+  });
+
+  // Handle input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase.functions.invoke('send-contact-notification', {
+        body: formData
+      });
+
+      if (error) throw error;
+
+      setIsSubmitted(true);
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for contacting us. We'll get back to you within 24-48 hours."
+      });
+
+      // Reset form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        organization: "",
+        subject: "",
+        message: ""
+      });
+    } catch (error) {
+      console.error('Error sending contact form:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send your message. Please try again or call us directly.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Show success message if form was submitted
+  if (isSubmitted) {
+    return (
+      <div className="min-h-screen">
+        <SEOHead 
+          title="Message Sent - Ivy Therapy"
+          description="Your message has been sent successfully. We'll get back to you within 24-48 hours."
+          keywords="contact confirmation, message sent, Ivy therapy contact"
+          canonical="/contact"
+        />
+        <Navigation />
+        <div className="pt-16">
+          <section className="py-20 bg-gradient-soft">
+            <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <div className="bg-background rounded-3xl p-8 shadow-warm border border-border/50">
+                <CheckCircle2 className="w-16 h-16 text-primary mx-auto mb-6" />
+                <h1 className="text-3xl font-heading font-bold mb-4 text-primary">
+                  Message Sent Successfully!
+                </h1>
+                <p className="text-lg text-muted-foreground mb-8">
+                  Thank you for reaching out. We'll get back to you within 24-48 hours.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button 
+                    variant="golden"
+                    onClick={() => setIsSubmitted(false)}
+                  >
+                    Send Another Message
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => window.location.href = '/'}
+                  >
+                    Return to Homepage
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen">
       <SEOHead 
@@ -51,50 +161,104 @@ const ContactPage = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" placeholder="Enter your first name" />
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="firstName">First Name</Label>
+                        <Input 
+                          id="firstName" 
+                          name="firstName"
+                          placeholder="Enter your first name" 
+                          required
+                          value={formData.firstName}
+                          onChange={handleInputChange}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="lastName">Last Name</Label>
+                        <Input 
+                          id="lastName" 
+                          name="lastName"
+                          placeholder="Enter your last name" 
+                          required
+                          value={formData.lastName}
+                          onChange={handleInputChange}
+                        />
+                      </div>
                     </div>
+                    
                     <div className="space-y-2">
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" placeholder="Enter your last name" />
+                      <Label htmlFor="email">Email Address</Label>
+                      <Input 
+                        id="email" 
+                        name="email"
+                        type="email" 
+                        placeholder="your.email@example.com" 
+                        required
+                        value={formData.email}
+                        onChange={handleInputChange}
+                      />
                     </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email Address</Label>
-                    <Input id="email" type="email" placeholder="your.email@example.com" />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input id="phone" type="tel" placeholder="(555) 123-4567" />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="organization">Organization/Facility (Optional)</Label>
-                    <Input id="organization" placeholder="Hospital, school, nursing home, etc." />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="subject">Subject</Label>
-                    <Input id="subject" placeholder="What would you like to discuss?" />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="Tell us about your therapy visit needs, questions, or how we can help..."
-                      className="min-h-[120px]"
-                    />
-                  </div>
-                  
-                  <Button variant="golden" size="lg" className="w-full">
-                    <Send className="w-5 h-5 mr-2" />
-                    Send Message
-                  </Button>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input 
+                        id="phone" 
+                        name="phone"
+                        type="tel" 
+                        placeholder="(555) 123-4567" 
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="organization">Organization/Facility (Optional)</Label>
+                      <Input 
+                        id="organization" 
+                        name="organization"
+                        placeholder="Hospital, school, nursing home, etc." 
+                        value={formData.organization}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="subject">Subject</Label>
+                      <Input 
+                        id="subject" 
+                        name="subject"
+                        placeholder="What would you like to discuss?" 
+                        required
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="message">Message</Label>
+                      <Textarea 
+                        id="message" 
+                        name="message"
+                        placeholder="Tell us about your therapy visit needs, questions, or how we can help..."
+                        className="min-h-[120px]"
+                        required
+                        value={formData.message}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    
+                    <Button 
+                      type="submit" 
+                      variant="golden" 
+                      size="lg" 
+                      className="w-full"
+                      disabled={isSubmitting}
+                    >
+                      <Send className="w-5 h-5 mr-2" />
+                      {isSubmitting ? "Sending..." : "Send Message"}
+                    </Button>
+                  </form>
                 </CardContent>
               </Card>
 

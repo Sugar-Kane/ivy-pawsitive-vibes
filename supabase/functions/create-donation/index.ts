@@ -29,6 +29,7 @@ serve(async (req) => {
 
     // Create a one-time payment session for donation
     const session = await stripe.checkout.sessions.create({
+      customer_email: "adamkane427@gmail.com", // For testing
       line_items: [
         {
           price_data: {
@@ -43,11 +44,12 @@ serve(async (req) => {
         },
       ],
       mode: "payment", // One-time payment
-      success_url: `${req.headers.get("origin")}/donate?success=true`,
+      success_url: `${req.headers.get("origin")}/donate?success=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get("origin")}/donate?canceled=true`,
       metadata: {
         type: "donation",
         amount: amount.toString(),
+        donor_email: "adamkane427@gmail.com", // For testing
       },
     });
 
