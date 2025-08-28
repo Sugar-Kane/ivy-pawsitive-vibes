@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { SEOHead } from "@/components/SEOHead";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import AddressAutocomplete from "@/components/AddressAutocomplete";
 
 const ContactPage = () => {
   const { toast } = useToast();
@@ -22,9 +23,11 @@ const ContactPage = () => {
     email: "",
     phone: "",
     organization: "",
+    address: "", // Add address field
     subject: "",
     message: ""
   });
+  const [structuredAddress, setStructuredAddress] = useState<any>(null); // Store structured address data
 
   // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -60,9 +63,11 @@ const ContactPage = () => {
         email: "",
         phone: "",
         organization: "",
+        address: "",
         subject: "",
         message: ""
       });
+      setStructuredAddress(null);
     } catch (error) {
       console.error('Error sending contact form:', error);
       toast({
@@ -220,6 +225,18 @@ const ContactPage = () => {
                         placeholder="Hospital, school, nursing home, etc." 
                         value={formData.organization}
                         onChange={handleInputChange}
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="address">Address (Optional)</Label>
+                      <AddressAutocomplete
+                        value={formData.address}
+                        onChange={(value) => setFormData(prev => ({ ...prev, address: value }))}
+                        onAddressSelect={setStructuredAddress}
+                        placeholder="Street address, city, state, zip"
+                        id="address"
+                        name="address"
                       />
                     </div>
                     

@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import AddressAutocomplete from '@/components/AddressAutocomplete';
 import {
   Form,
   FormControl,
@@ -58,6 +59,7 @@ const AppointmentBooking = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [confirmedBooking, setConfirmedBooking] = useState<any>(null);
+  const [structuredAddress, setStructuredAddress] = useState<any>(null); // Store structured address data
   const { toast } = useToast();
   
   const form = useForm<AppointmentForm>({
@@ -264,7 +266,13 @@ const AppointmentBooking = () => {
                   <FormItem>
                     <FormLabel>Complete Address *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Street address, city, state, zip" {...field} />
+                      <AddressAutocomplete
+                        value={field.value || ''}
+                        onChange={field.onChange}
+                        onAddressSelect={setStructuredAddress}
+                        placeholder="Street address, city, state, zip"
+                        required
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
