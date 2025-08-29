@@ -15,8 +15,11 @@ interface ContactRequest {
   email: string;
   phone?: string;
   organization?: string;
+  address?: string;
   subject: string;
   message: string;
+  structured_address?: any;
+  coordinates?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -26,7 +29,18 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { firstName, lastName, email, phone, organization, subject, message }: ContactRequest = await req.json();
+    const { 
+      firstName, 
+      lastName, 
+      email, 
+      phone, 
+      organization, 
+      address,
+      subject, 
+      message,
+      structured_address,
+      coordinates
+    }: ContactRequest = await req.json();
 
     if (!firstName || !lastName || !email || !subject || !message) {
       throw new Error("Required fields are missing");
@@ -39,8 +53,7 @@ const handler = async (req: Request): Promise<Response> => {
       { auth: { persistSession: false } }
     );
 
-    // Store contact submission (optional - would need contact_submissions table)
-    /* 
+    // Store contact submission in database
     const { error: submissionError } = await supabaseService
       .from("contact_submissions")
       .insert({
@@ -49,20 +62,22 @@ const handler = async (req: Request): Promise<Response> => {
         email: email,
         phone: phone || null,
         organization: organization || null,
+        address: address || null,
         subject: subject,
         message: message,
-        status: 'new'
+        structured_address: structured_address || null,
+        coordinates: coordinates || null
       });
 
     if (submissionError) {
       console.error("Error storing contact submission:", submissionError);
+      throw submissionError;
     }
-    */
 
     // Send admin notification
     const adminEmailResponse = await resend.emails.send({
       from: "Ivy Therapy <notifications@lovable.app>",
-      to: ["admin@ivytherapy.com"], // Replace with actual admin email
+      to: ["adamkane13@gmail.com"], // Admin email
       subject: `New Contact Form Submission: ${subject}`,
       html: `
         <h2>New Contact Form Submission</h2>
@@ -74,6 +89,7 @@ const handler = async (req: Request): Promise<Response> => {
           <li><strong>Email:</strong> ${email}</li>
           ${phone ? `<li><strong>Phone:</strong> ${phone}</li>` : ''}
           ${organization ? `<li><strong>Organization:</strong> ${organization}</li>` : ''}
+          ${address ? `<li><strong>Address:</strong> ${address}</li>` : ''}
         </ul>
         
         <h3>Subject:</h3>

@@ -44,8 +44,17 @@ const ContactPage = () => {
     setIsSubmitting(true);
 
     try {
+      // Prepare contact data with structured address
+      const contactData = {
+        ...formData,
+        structured_address: structuredAddress || null,
+        coordinates: structuredAddress?.lat && structuredAddress?.lng 
+          ? `POINT(${structuredAddress.lng} ${structuredAddress.lat})` 
+          : null
+      };
+
       const { error } = await supabase.functions.invoke('send-contact-notification', {
-        body: formData
+        body: contactData
       });
 
       if (error) throw error;

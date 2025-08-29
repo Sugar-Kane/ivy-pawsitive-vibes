@@ -20,12 +20,14 @@ export type Database = {
           appointment_time: string
           business_name: string
           contact_number: string
+          coordinates: unknown | null
           created_at: string
           id: string
           location: string
           name: string
           notes: string | null
           status: string
+          structured_address: Json | null
           updated_at: string
         }
         Insert: {
@@ -33,12 +35,14 @@ export type Database = {
           appointment_time: string
           business_name: string
           contact_number: string
+          coordinates?: unknown | null
           created_at?: string
           id?: string
           location: string
           name: string
           notes?: string | null
           status?: string
+          structured_address?: Json | null
           updated_at?: string
         }
         Update: {
@@ -46,12 +50,62 @@ export type Database = {
           appointment_time?: string
           business_name?: string
           contact_number?: string
+          coordinates?: unknown | null
           created_at?: string
           id?: string
           location?: string
           name?: string
           notes?: string | null
           status?: string
+          structured_address?: Json | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          address: string | null
+          coordinates: unknown | null
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          last_name: string
+          message: string
+          organization: string | null
+          phone: string | null
+          structured_address: Json | null
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          coordinates?: unknown | null
+          created_at?: string
+          email: string
+          first_name: string
+          id?: string
+          last_name: string
+          message: string
+          organization?: string | null
+          phone?: string | null
+          structured_address?: Json | null
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          coordinates?: unknown | null
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          message?: string
+          organization?: string | null
+          phone?: string | null
+          structured_address?: Json | null
+          subject?: string
           updated_at?: string
         }
         Relationships: []

@@ -70,18 +70,25 @@ const AppointmentBooking = () => {
     setIsSubmitting(true);
     
     try {
+      // Prepare appointment data with structured address
+      const appointmentData = {
+        name: data.name,
+        business_name: data.businessName,
+        contact_number: data.contactNumber,
+        location: data.location,
+        appointment_date: format(data.appointmentDate, 'yyyy-MM-dd'),
+        appointment_time: data.appointmentTime,
+        notes: data.notes || null,
+        structured_address: structuredAddress || null,
+        coordinates: structuredAddress?.lat && structuredAddress?.lng 
+          ? `POINT(${structuredAddress.lng} ${structuredAddress.lat})` 
+          : null
+      };
+
       // First, create the appointment
-      const { data: appointmentData, error } = await supabase
+      const { data: appointmentData2, error } = await supabase
         .from('appointments')
-        .insert({
-          name: data.name,
-          business_name: data.businessName,
-          contact_number: data.contactNumber,
-          location: data.location,
-          appointment_date: format(data.appointmentDate, 'yyyy-MM-dd'),
-          appointment_time: data.appointmentTime,
-          notes: data.notes || null,
-        })
+        .insert(appointmentData)
         .select()
         .single();
 
@@ -93,7 +100,7 @@ const AppointmentBooking = () => {
       try {
         const { error: emailError } = await supabase.functions.invoke('send-appointment-notification', {
           body: {
-            appointmentId: appointmentData.id,
+            appointmentId: appointmentData2.id,
             sendCustomerConfirmation: false // Can be enabled if customer email field is added
           }
         });
