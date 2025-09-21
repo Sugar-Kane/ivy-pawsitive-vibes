@@ -2,8 +2,9 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@14.21.0";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "*", // Consider restricting to your domain in production
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
 serve(async (req) => {
@@ -15,10 +16,17 @@ serve(async (req) => {
   try {
     console.log("Creating donation payment session");
     
+    // Validate request origin for additional security
+    const origin = req.headers.get("origin");
+    if (!origin) {
+      throw new Error("Origin header required");
+    }
+    
     const { amount } = await req.json();
     
-    if (!amount || amount < 100) { // Minimum $1.00
-      throw new Error("Invalid donation amount");
+    // Enhanced validation
+    if (!amount || typeof amount !== 'number' || amount < 100 || amount > 1000000) { // $1 - $10,000 limit
+      throw new Error("Invalid donation amount. Must be between $1 and $10,000");
     }
 
     console.log(`Processing donation for amount: $${amount / 100}`);
@@ -61,7 +69,13 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error("Error creating donation session:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    // Don't expose detailed error messages to clients
+    const errorMessage = error instanceof Error ? error.message : "An error occurred";
+    const publicError = errorMessage.includes("Invalid donation amount") || errorMessage.includes("Origin header required") 
+      ? errorMessage 
+      : "Payment processing error";
+    
+    return new Response(JSON.stringify({ error: publicError }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,
     });

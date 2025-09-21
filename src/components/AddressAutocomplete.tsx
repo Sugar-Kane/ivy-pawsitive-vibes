@@ -12,20 +12,18 @@ const loadGooglePlacesScript = async (): Promise<void> => {
     }
 
     try {
-      // Get API key from edge function
-      const response = await fetch(`https://oqvqctgewpbzgbawyosj.supabase.co/functions/v1/get-google-places-key`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xdnFjdGdld3BiemdiYXd5b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU0NTgyNDcsImV4cCI6MjA3MTAzNDI0N30.sKbyfH_zvzxT4KaZVggORzVJzR2HGV1mkNXx0l2F4Uk`
-        }
+      // Get API key from edge function using Supabase client
+      const { supabase } = await import('@/integrations/supabase/client');
+      
+      const { data, error } = await supabase.functions.invoke('get-google-places-key', {
+        body: {}
       });
       
-      if (!response.ok) {
-        throw new Error('Failed to get API key');
+      if (error) {
+        throw new Error(`Failed to get API key: ${error.message}`);
       }
       
-      const { apiKey } = await response.json();
+      const { apiKey } = data;
       
       const script = document.createElement('script');
       script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;

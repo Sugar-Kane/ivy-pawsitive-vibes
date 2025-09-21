@@ -4,8 +4,9 @@ import { Resend } from "npm:resend@2.0.0";
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "*", // Consider restricting to your domain in production
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
 interface NotificationEmailRequest {
@@ -23,6 +24,16 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     const { email, name, type, data }: NotificationEmailRequest = await req.json();
+    
+    // Enhanced validation
+    if (!email || typeof email !== 'string' || !email.includes('@')) {
+      throw new Error("Valid email address required");
+    }
+    
+    if (!type || !['welcome', 'newsletter_confirmation'].includes(type)) {
+      throw new Error("Invalid email type");
+    }
+    
     console.log(`Sending ${type} email to ${email}`);
 
     let emailContent = {
@@ -87,8 +98,14 @@ const handler = async (req: Request): Promise<Response> => {
     });
   } catch (error: any) {
     console.error("Error in send-notification-email function:", error);
+    // Don't expose detailed error messages to clients
+    const errorMessage = error instanceof Error ? error.message : "An error occurred";
+    const publicError = errorMessage.includes("email") || errorMessage.includes("type") 
+      ? errorMessage 
+      : "Email delivery error";
+    
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: publicError }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
