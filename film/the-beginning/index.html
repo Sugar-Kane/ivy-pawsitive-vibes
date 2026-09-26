@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Beginning</title>
+<style>
+  @font-face { font-family: 'Cinzel'; src: url('assets/Cinzel.ttf') format('truetype'); font-weight: 400 900; }
+  :root { --bg: #000; --fg: #e9dcc0; --dim: #8a7c62; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); font-family: Cinzel, serif; }
+  body { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  #stage { position: relative; width: min(100vw, calc(100vh * 2.39)); aspect-ratio: 2.39 / 1; background: #000; }
+  canvas { width: 100%; height: 100%; display: block; }
+  #play { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+          background: #000; border: 0; color: var(--fg); font: inherit; letter-spacing: .35em; cursor: pointer; }
+  #play small { color: var(--dim); letter-spacing: .25em; font-size: 12px; }
+  #bar { position: fixed; left: 16px; right: 16px; bottom: 12px; height: 3px; background: #1a1a1a; opacity: 0; transition: opacity .4s; }
+  body:hover #bar { opacity: 1; }
+  #bar i { display: block; height: 100%; width: 0; background: #a8733a; }
+  body.capture #play, body.capture #bar { display: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="c"></canvas>
+  <button id="play">THE BEGINNING<small>Click to play · headphones recommended</small></button>
+</div>
+<div id="bar"><i></i></div>
+<audio id="snd" src="assets/soundtrack.m4a" preload="auto"></audio>
+<script src="film.js"></script>
+<script>
+(async () => {
+  const q = new URLSearchParams(location.search);
+  const capture = q.has('capture');
+  const cv = document.getElementById('c');
+  // Render at full 1920 width for capture; scale to the display otherwise.
+  const scale = capture ? 1 : Math.min(1, (q.get('q') ? +q.get('q') : 0.6));
+  cv.width = Math.round(FILM.W * scale); cv.height = Math.round(FILM.H * scale);
+  const ctx = cv.getContext('2d');
+  await FILM.init();
+  if (capture) { document.body.classList.add('capture'); window.FILM_READY = true; window.FILM_CTX = ctx; return; }
+
+  FILM.render(ctx, 0, scale);
+  const snd = document.getElementById('snd'), bar = document.querySelector('#bar i');
+  let t0 = null;
+  const now = () => (snd.readyState >= 2 && !snd.paused ? snd.currentTime : (performance.now() - t0) / 1000);
+  function frame() {
+    const t = now();
+    FILM.render(ctx, t, scale);
+    bar.style.width = (100 * t / FILM.DURATION) + '%';
+    if (t < FILM.DURATION) requestAnimationFrame(frame);
+  }
+  document.getElementById('play').onclick = (e) => {
+    e.currentTarget.remove();
+    t0 = performance.now();
+    snd.play().catch(() => {});
+    requestAnimationFrame(frame);
+  };
+})();
+</script>
+</body>
+</html>
